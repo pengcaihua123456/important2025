@@ -1,0 +1,4 @@
+rootProject.name='important2025'
+include ':app'
+include ':moduleAsm'
+include ':moduleMatrix'

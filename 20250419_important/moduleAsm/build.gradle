@@ -1,0 +1,58 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'java-gradle-plugin' // 必须添加这个插件才能使用 gradlePlugin {} 块
+}
+
+// 添加以下配置
+group = 'com.example.asmplugin'  // 合法的 groupId（必须修改！）
+version = '1.0.0'                // 指定版本号
+
+
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation 'org.ow2.asm:asm:7.3.1' // ASM 核心库
+    implementation 'org.ow2.asm:asm-commons:7.3.1'
+    implementation 'com.android.tools.build:gradle:4.0.0'
+}
+
+java {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+
+gradlePlugin {
+    plugins {
+        timeMethodPlugin {
+            id = 'com.example.time-plugin'
+            implementationClass = 'com.example.moduleasm.TimePlugin'
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            // 明确指定 groupId 和 artifactId
+            groupId = 'com.example.asmplugin'  // 与上面的 group 一致
+            artifactId = 'asm-plugin'          // 自定义名称
+            version = '1.0.0'
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+gradle.taskGraph.beforeTask { Task task ->
+    if (task.name.contains("Transform")) {
+        println "Transform任务 detected: ${task.name}"
+    }
+}
