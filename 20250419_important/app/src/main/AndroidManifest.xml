@@ -26,6 +26,7 @@
         <activity android:name=".leak.OomQueueImageActivity"></activity>
         <activity android:name=".leak.OomRecyclerActivity"></activity>
         <activity android:name=".view.RadioFrequencyUltraActivity"></activity>
+        <activity android:name=".leak.video.VideoPlayerActivity"></activity>
     </application>
 
 </manifest>

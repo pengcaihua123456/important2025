@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.evenbus.myapplication.leak.LeakThreadActivity;
 import com.evenbus.myapplication.leak.OomRecyclerActivity;
+import com.evenbus.myapplication.leak.video.VideoPlayerActivity;
 import com.evenbus.myapplication.trace.LaggyAnimationActivity;
 import com.evenbus.myapplication.trace.TraceActivity;
 import com.evenbus.myapplication.view.RadioFrequencyUltraActivity;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                traceAnim();
-                RadioActivity();
+                ViewMemoryLeak();
             }
         });
     }
@@ -54,9 +55,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, OomRecyclerActivity.class);
         startActivity(intent);
     }
-    private void MemoryLeak(){
+
+    private void MemoryLeak() {
         // 在按钮点击或其他事件中
         Intent intent = new Intent(MainActivity.this, LeakThreadActivity.class);
+        startActivity(intent);
+    }
+
+    private void ViewMemoryLeak() {
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(MainActivity.this, VideoPlayerActivity.class);
         startActivity(intent);
     }
 
