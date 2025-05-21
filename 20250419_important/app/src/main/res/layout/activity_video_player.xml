@@ -7,7 +7,7 @@
     >
 
     <!-- 自定义视频播放器View -->
-    <com.evenbus.myapplication.leak.video.CoverVideoPlayerView
+    <com.evenbus.myapplication.leak.videoleak.CoverVideoPlayerView
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -9,11 +9,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evenbus.myapplication.leak.LeakThreadActivity;
-import com.evenbus.myapplication.leak.OomRecyclerActivity;
-import com.evenbus.myapplication.leak.video.VideoPlayerActivity;
+import com.evenbus.myapplication.leak.oom.OomRecyclerActivity;
+import com.evenbus.myapplication.leak.videoleak.VideoPlayerActivity;
 import com.evenbus.myapplication.trace.LaggyAnimationActivity;
 import com.evenbus.myapplication.trace.TraceActivity;
-import com.evenbus.myapplication.view.RadioFrequencyUltraActivity;
+import com.evenbus.myapplication.view.radio.RadioFrequencyUltraActivity;
 
 public class MainActivity extends AppCompatActivity {
 
