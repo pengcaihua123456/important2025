@@ -31,7 +31,7 @@ public abstract class LeakMaker<T> {
   private static List<LeakMaker> leakMakerList = new ArrayList<>();
 
   public static void makeLeak(Context context) {
-    leakMakerList.add(new ActivityLeakMaker());
+//    leakMakerList.add(new ActivityLeakMaker());
     leakMakerList.add(new BitmapLeakMaker());
     leakMakerList.add(new ByteArrayLeakMaker());
     leakMakerList.add(new FragmentLeakMaker());
@@ -40,14 +40,14 @@ public abstract class LeakMaker<T> {
       leakMaker.startLeak(context);
     }
 
-    for (int i = 0; i < 700; i++) {
-      new Thread(() -> {
-        try {
-          Thread.sleep(200000);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }).start();
-    }
+//    for (int i = 0; i < 700; i++) { // 线程太多
+//      new Thread(() -> {
+//        try {
+//          Thread.sleep(200000);
+//        } catch (InterruptedException e) {
+//          e.printStackTrace();
+//        }
+//      }).start();
+//    }
   }
 }

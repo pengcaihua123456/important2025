@@ -4,15 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.evenbus.myapplication.view.radio.RadioFrequencyMiniView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#aaffff" />
+
+    <com.evenbus.myapplication.view.radio.RadioFrequencyView
+        android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_height="100dp"
+        android:background="#aaffff" />
+
+    <com.evenbus.myapplication.view.radio.RadioFrequencyPlusView
+        android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_height="100dp"
+        android:background="#aaffff" />
+
     <com.evenbus.myapplication.view.radio.RadioFrequencyUltraView
         android:id="@+id/animation_view"
         android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
         android:layout_height="100dp"
         android:background="#aaffff" />
 
     <com.evenbus.myapplication.view.wheel.PerfectWheelView
         android:id="@+id/wheelView"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         android:layout_gravity="center"
         android:layout_width="200dp"
         android:layout_height="80dp">

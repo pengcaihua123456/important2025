@@ -27,6 +27,8 @@
         <activity android:name=".leak.oom.OomRecyclerActivity"></activity>
         <activity android:name=".view.radio.RadioFrequencyUltraActivity"></activity>
         <activity android:name=".leak.videoleak.VideoPlayerActivity"></activity>
+        <activity android:name=".ViewActivity"></activity>
+        <activity android:name=".view.wheel.WheelActivity"></activity>
     </application>
 
 </manifest>
