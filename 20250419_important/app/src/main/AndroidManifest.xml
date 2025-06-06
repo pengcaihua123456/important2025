@@ -29,6 +29,7 @@
         <activity android:name=".leak.videoleak.VideoPlayerActivity"></activity>
         <activity android:name=".ViewActivity"></activity>
         <activity android:name=".view.wheel.WheelActivity"></activity>
+        <activity android:name=".view.flow.FlowViewActivity"></activity>
     </application>
 
 </manifest>
