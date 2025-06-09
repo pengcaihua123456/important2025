@@ -18,7 +18,7 @@
         android:layout_height="200dp">
     </com.evenbus.myapplication.view.flow.FlowLayout>
 
-    <com.evenbus.myapplication.view.flow.ScrollableViewFlowLayout
+    <com.evenbus.myapplication.view.flow.ScrollViewFlowLayout
         android:id="@+id/scrollable_flow_layout"
         android:layout_width="match_parent"
         android:layout_height="200dp"

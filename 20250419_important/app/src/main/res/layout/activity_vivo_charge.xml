@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- 使用自定义View实现圆角矩形 -->
+    <com.evenbus.myapplication.view.charge.RoundedRectView
+        android:id="@+id/charging_rect"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"/>
+
+    <!-- 充电百分比 -->
+    <TextView
+        android:id="@+id/percent_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="100%"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"/>
+
+    <!-- 充电状态 -->
+    <TextView
+        android:id="@+id/charging_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:text="正在充电"
+        android:textColor="#00FFCC"
+        android:textSize="18sp"/>
+
+    <!-- 开始动画按钮 -->
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="100dp"
+        android:text="开始收缩动画"
+        android:textColor="#FFFFFF"
+        android:background="#00FFCC"/>
+
+</FrameLayout>

@@ -38,7 +38,7 @@ public class FlowViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flow_view);
 
-        ScrollableViewFlowLayout scrollableFlowLayout = findViewById(R.id.scrollable_flow_layout);
+        ScrollViewFlowLayout scrollableFlowLayout = findViewById(R.id.scrollable_flow_layout);
         scrollableFlowLayout.setHorizontalSpacing(8);
         scrollableFlowLayout.setVerticalSpacing(8);
 

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.evenbus.myapplication.view.charge.AnimVivoActivity;
 import com.evenbus.myapplication.view.flow.FlowViewActivity;
 import com.evenbus.myapplication.view.radio.RadioFrequencyUltraActivity;
 import com.evenbus.myapplication.view.wheel.WheelActivity;
@@ -35,7 +36,7 @@ public class ViewActivity extends AppCompatActivity {
         tv_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wheelActivity();
+                VivoActivity();
             }
         });
 
@@ -46,6 +47,19 @@ public class ViewActivity extends AppCompatActivity {
             }
         });
 
+        tv_memory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wheelActivity();
+            }
+        });
+
+    }
+
+    private void VivoActivity(){
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(ViewActivity.this, AnimVivoActivity.class);
+        startActivity(intent);
     }
 
     private void FlowActivity(){

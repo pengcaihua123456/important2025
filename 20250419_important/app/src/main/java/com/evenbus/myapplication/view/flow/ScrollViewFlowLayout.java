@@ -6,22 +6,22 @@ import android.util.AttributeSet;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class ScrollableViewFlowLayout extends ScrollView {
+public class ScrollViewFlowLayout extends ScrollView {
     private FlowLayout flowLayout;
     private int horizontalSpacing = 16;
     private int verticalSpacing = 16;
 
-    public ScrollableViewFlowLayout(Context context) {
+    public ScrollViewFlowLayout(Context context) {
         super(context);
         init();
     }
 
-    public ScrollableViewFlowLayout(Context context, AttributeSet attrs) {
+    public ScrollViewFlowLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public ScrollableViewFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ScrollViewFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
