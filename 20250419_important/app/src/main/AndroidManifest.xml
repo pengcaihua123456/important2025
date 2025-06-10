@@ -31,6 +31,7 @@
         <activity android:name=".view.wheel.WheelActivity"></activity>
         <activity android:name=".view.flow.FlowViewActivity"></activity>
         <activity android:name=".view.charge.AnimVivoActivity"></activity>
+        <activity android:name=".view.extand.ExpandActivity"></activity>
     </application>
 
 </manifest>
