@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evenbus.myapplication.view.charge.AnimVivoActivity;
+import com.evenbus.myapplication.view.circle.CircleChargeActivity;
 import com.evenbus.myapplication.view.extand.ExpandActivity;
 import com.evenbus.myapplication.view.flow.FlowViewActivity;
 import com.evenbus.myapplication.view.radio.RadioFrequencyUltraActivity;
@@ -21,6 +22,8 @@ public class ViewActivity extends AppCompatActivity {
     public TextView tv_view;
     public TextView tv_expand;
 
+    public TextView tv_circle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,7 @@ public class ViewActivity extends AppCompatActivity {
         tv_asm = findViewById(R.id.tv_asm);
         tv_view = findViewById(R.id.tv_view);
         tv_expand = findViewById(R.id.tv_expand);
+        tv_circle = findViewById(R.id.tv_circle);
         tv_trace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +68,18 @@ public class ViewActivity extends AppCompatActivity {
             }
         });
 
+        tv_circle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                circleActivity();
+            }
+        });
+    }
+
+    private void circleActivity(){
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(ViewActivity.this, CircleChargeActivity.class);
+        startActivity(intent);
     }
 
     private void ExpandActivity(){
