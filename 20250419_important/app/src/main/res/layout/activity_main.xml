@@ -50,4 +50,15 @@
         app:layout_constraintStart_toStartOf="parent"
          />
 
+    <TextView
+        android:id="@+id/tv_arount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="arount"
+        app:layout_constraintTop_toBottomOf="@+id/tv_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

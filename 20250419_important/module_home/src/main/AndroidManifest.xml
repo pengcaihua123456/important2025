@@ -1,0 +1,3 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.module_home"> <!-- 必须指定包名 -->
+</manifest>

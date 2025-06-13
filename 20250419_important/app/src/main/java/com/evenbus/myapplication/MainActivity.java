@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.evenbus.myapplication.leak.LeakThreadActivity;
 import com.evenbus.myapplication.leak.oom.OomRecyclerActivity;
 import com.evenbus.myapplication.leak.videoleak.VideoPlayerActivity;
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     public TextView tv_asm;
     public TextView tv_view;
 
+    public TextView tv_arount;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        tv_arount=findViewById(R.id.tv_arount);
         tv_trace = findViewById(R.id.tv_trace);
         tv_memory = findViewById(R.id.tv_memory);
         tv_asm = findViewById(R.id.tv_asm);
@@ -45,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewMy();
+            }
+        });
+
+        tv_arount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //通过路由直接打开home组件的HomeActivity，
+                ARouter.getInstance().build("/homepage/homeActivity").navigation();
             }
         });
 

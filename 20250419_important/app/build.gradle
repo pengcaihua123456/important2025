@@ -40,8 +40,9 @@ dependencies {
 //    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'  // 使用支持 SDK 29 的旧版本
+//    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.appcompat:appcompat:1.2.0'// 使用支持 SDK 29 的旧版本
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -49,6 +50,9 @@ dependencies {
 
 
     implementation project(':moduleMatrix') // 直接引用本地模块
+    implementation project(':module_cart') // 直接引用本地模块
+    api project(':module_common') // 直接引用本地模块
+    implementation project(':module_home') // 直接引用本地模块
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.12' // 使用最新版本
 

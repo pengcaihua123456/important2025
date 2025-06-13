@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+
+    compileSdkVersion 29
+    defaultConfig {
+        minSdkVersion 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        // 否则arount会报错
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    buildFeatures {
+        aidl true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+
+//    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    api 'com.alibaba:arouter-api:1.4.0'
+//    annotationProcessor 'com.alibaba:arouter-compiler:1.2.1'
+
+    api 'com.alibaba:arouter-api:1.5.2' // 最新稳定版
+    annotationProcessor 'com.alibaba:arouter-compiler:1.5.2'
+
+
+//    annotationProcessor 'com.github.hufeiyang.Android-AppLifecycleMgr:applifecycle-compiler:1.0.4'
+    api 'androidx.constraintlayout:constraintlayout:2.0.1'// 直接引用本地模块
+//    implementation 'com.google.android.material:material:1.10.0'
+//    testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

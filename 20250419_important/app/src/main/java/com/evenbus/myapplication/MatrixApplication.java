@@ -2,8 +2,7 @@ package com.evenbus.myapplication;
 
 import android.app.Application;
 
-
-import java.io.File;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 public class MatrixApplication extends Application {
 
@@ -12,6 +11,11 @@ public class MatrixApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ARouter.debuggable();
+        ARouter.init(this);
+
+
+
     }
 
 
