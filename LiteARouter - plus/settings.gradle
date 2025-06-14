@@ -1,0 +1,4 @@
+include ':app'
+include ':module_route'
+include ':module_A'
+include ':module_B'

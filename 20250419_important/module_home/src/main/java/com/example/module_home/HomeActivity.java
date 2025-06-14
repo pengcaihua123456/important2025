@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.example.api.ICardJumpInterface;
+import com.example.routelib.ICardJumpInterface;
 import com.example.api.INoticeListener;
 import com.example.common.ICartServiceAidl;
 import com.example.export_cart.CartServiceUtil;
@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 CartServiceUtil.navigateCartPage("param1", "param1");  // 携带参数
 
-                myArunter();
+                arounterMini();
 
                 notifyCardFragment();
 
@@ -89,7 +89,7 @@ public class HomeActivity extends AppCompatActivity {
         iNoticeListener.fouce(true);
     }
 
-    private void myArunter() {
+    private void arounterMini() {
         Log.d("HomeActivity","----myArunter-----");
         ICardJumpInterface iCardJumpInterface=getByReflect();
         iCardJumpInterface.jumpcardModuleActivity(null,HomeActivity.this);

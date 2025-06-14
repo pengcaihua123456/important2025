@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LiteARouter_-_plus.iml" filepath="$PROJECT_DIR$/.idea/modules/LiteARouter_-_plus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LiteARouter_-_plus.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LiteARouter_-_plus.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LiteARouter_-_plus.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LiteARouter_-_plus.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LiteARouter_-_plus.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LiteARouter_-_plus.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/LiteARouter_-_plus.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/LiteARouter_-_plus.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_A/LiteARouter_-_plus.module_A.iml" filepath="$PROJECT_DIR$/.idea/modules/module_A/LiteARouter_-_plus.module_A.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_A/LiteARouter_-_plus.module_A.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_A/LiteARouter_-_plus.module_A.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_A/LiteARouter_-_plus.module_A.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_A/LiteARouter_-_plus.module_A.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_A/LiteARouter_-_plus.module_A.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_A/LiteARouter_-_plus.module_A.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_B/LiteARouter_-_plus.module_B.iml" filepath="$PROJECT_DIR$/.idea/modules/module_B/LiteARouter_-_plus.module_B.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_B/LiteARouter_-_plus.module_B.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_B/LiteARouter_-_plus.module_B.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_B/LiteARouter_-_plus.module_B.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_B/LiteARouter_-_plus.module_B.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_B/LiteARouter_-_plus.module_B.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_B/LiteARouter_-_plus.module_B.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/LiteARouter_-_plus.module_route.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/LiteARouter_-_plus.module_route.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/LiteARouter_-_plus.module_route.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/LiteARouter_-_plus.module_route.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/LiteARouter_-_plus.module_route.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/LiteARouter_-_plus.module_route.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/LiteARouter_-_plus.module_route.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/LiteARouter_-_plus.module_route.unitTest.iml" />
+    </modules>
+  </component>
+</project>
