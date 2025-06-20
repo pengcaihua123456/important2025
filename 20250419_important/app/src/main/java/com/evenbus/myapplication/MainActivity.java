@@ -14,6 +14,8 @@ import com.evenbus.myapplication.leak.oom.OomRecyclerActivity;
 import com.evenbus.myapplication.leak.videoleak.VideoPlayerActivity;
 import com.evenbus.myapplication.trace.LaggyAnimationActivity;
 import com.evenbus.myapplication.trace.TraceActivity;
+import com.example.modulebufferknifeantotations.BindView;
+import com.example.modulebufferknifeantotations.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,12 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
     public TextView tv_arount;
 
+    @BindView(R.id.tv_compler)
+    public TextView tv_compler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+    }
+
+    @OnClick(R.id.tv_compler)
+    public void onclick(View v){
+
     }
 
     private void initView() {
@@ -60,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 ARouter.getInstance().build("/homepage/homeActivity").navigation();
             }
         });
+
 
     }
 

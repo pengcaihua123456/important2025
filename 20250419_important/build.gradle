@@ -6,7 +6,7 @@ buildscript {
         google()
         jcenter()
         mavenLocal()  // 本地插件仓库
-        mavenCentral()
+        mavenCentral() // 否则有些资源下载不下来Could not download guava-31.0.1-jre.jar (com.google.guava:guava:31.0.1-jre): N
         
     }
     dependencies {

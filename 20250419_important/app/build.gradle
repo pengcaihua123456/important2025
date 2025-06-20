@@ -34,6 +34,22 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    afterEvaluate {
+        tasks.withType(JavaCompile).configureEach {
+            options.compilerArgs += [
+                    '-Xlint:processing',
+                    '-XprintProcessorInfo',
+                    '-XprintRounds'
+            ]
+        }
+    }
+
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-verbose"
+    }
 }
 
 dependencies {
@@ -58,6 +74,9 @@ dependencies {
 
     annotationProcessor 'com.google.auto.service:auto-service:1.0.1'
     implementation 'com.google.auto.service:auto-service:1.0.1'
+    annotationProcessor project(':moduleBufferKnife') // 直接引用本地模块
+    implementation project(':moduleBufferKnifeAntotations') // 注解处理器模块
+
 
 
 }
