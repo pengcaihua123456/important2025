@@ -2,18 +2,11 @@ package com.evenbus.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.evenbus.myapplication.leak.LeakThreadActivity;
-import com.evenbus.myapplication.leak.oom.OomRecyclerActivity;
-import com.evenbus.myapplication.leak.videoleak.VideoPlayerActivity;
-import com.evenbus.myapplication.trace.LaggyAnimationActivity;
-import com.evenbus.myapplication.trace.TraceActivity;
 import com.example.modulebufferknifeantotations.BindView;
 import com.example.modulebufferknifeantotations.OnClick;
 
@@ -51,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         tv_trace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                traceAnim();
-                ViewMemoryLeak();
+                trace();
             }
         });
         tv_view.setOnClickListener(new View.OnClickListener() {
@@ -62,45 +54,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        tv_memory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Memory();
+            }
+        });
+
         tv_arount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //通过路由直接打开home组件的HomeActivity，
-                ARouter.getInstance().build("/homepage/homeActivity").navigation();
+                arounter();
             }
         });
-
-
     }
 
-    private void traceAnim(){
+    private void arounter(){
         // 在按钮点击或其他事件中
-        Intent intent = new Intent(MainActivity.this, LaggyAnimationActivity.class);
+        Intent intent = new Intent(MainActivity.this, ArounterActivity.class);
         startActivity(intent);
     }
 
 
-    private void MemoryImage(){
+    private void Memory(){
         // 在按钮点击或其他事件中
-        Intent intent = new Intent(MainActivity.this, OomRecyclerActivity.class);
-        startActivity(intent);
-    }
-
-    private void MemoryLeak() {
-        // 在按钮点击或其他事件中
-        Intent intent = new Intent(MainActivity.this, LeakThreadActivity.class);
-        startActivity(intent);
-    }
-
-    private void ViewMemoryLeak() {
-        // 在按钮点击或其他事件中
-        Intent intent = new Intent(MainActivity.this, VideoPlayerActivity.class);
+        Intent intent = new Intent(MainActivity.this, OomActivity.class);
         startActivity(intent);
     }
 
     private void trace(){
         // 在按钮点击或其他事件中
-        Intent intent = new Intent(MainActivity.this, TraceActivity.class);
+        Intent intent = new Intent(MainActivity.this, MatrixActivity.class);
         startActivity(intent);
     }
 
@@ -110,22 +95,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void testThreadAnr() {
-        try {
-            int number = 0;
-            while (number++ < 5) {
-                Log.e(TAG, "主线程睡眠导致的ANR:次数" + number + "/5");
-                try {
-                    Thread.sleep(5000L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "异常信息为:" + e.getMessage());
-                }
-            }
 
-        } catch (Throwable e) {
-            e.printStackTrace();
-            Log.e(TAG, "异常信息为:" + e.getMessage());
-        }
-    }
 }

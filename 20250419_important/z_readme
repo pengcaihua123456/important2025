@@ -2,11 +2,13 @@
 主要包含高级特性
 性能优化
 1.卡顿优化，
-2.内存优化（profile,MAT,KOOM实战分析）
+2.基于Matrix字节码插桩ASM
+3.内存优化（profile,MAT,KOOM实战分析）
 内存泄露
 内存溢出
-3.字节码插桩ASM
-4.自定义view，高级滑动
+4.自定义view，高级滑动,动画
+5.组件化
+6.基于组件化的APT
 ----------------------------------------------
 github仓库
 https://github.com/pengcaihua123456/important2025/tree/main/20250419_important
