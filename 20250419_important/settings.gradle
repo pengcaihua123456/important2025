@@ -7,3 +7,11 @@ include ':module_home'
 include ':module_cart'
 include ':moduleBufferKnifeAntotations'
 include ':moduleBufferKnife'
+include ':moduleAsmArounter'
+
+
+//可改，可不改！
+//setting里面的gradle :防止生成多个插件!
+//        include ':moduleAsmArounter'
+//project(':moduleAsmArounter').name = 'router-plugin' // 重命名模块
+include ':moduledDesign'

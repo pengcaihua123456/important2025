@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.tencent.matrix-plugin'
 //apply plugin: 'com.example.time-plugin'
+apply plugin: 'com.example.router.plugin'
 
 android {
     compileSdkVersion 29
@@ -76,7 +77,7 @@ dependencies {
     implementation 'com.google.auto.service:auto-service:1.0.1'
     annotationProcessor project(':moduleBufferKnife') // 直接引用本地模块
     implementation project(':moduleBufferKnifeAntotations') // 注解处理器模块
-
+    implementation project(':moduledDesign') // 注解处理器模块
 
 
 }

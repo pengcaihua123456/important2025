@@ -1,0 +1,95 @@
+plugins {
+    id 'groovy'
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+}
+
+// 关键配置：设置基础信息
+group = 'com.example.router.plugin'
+version = '1.0.0'
+archivesBaseName = 'router-plugin' // 覆盖默认模块名
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'org.ow2.asm:asm:9.5'         // 更新到最新版本
+    implementation 'org.ow2.asm:asm-commons:9.5' // 更新到最新版本
+    implementation 'com.android.tools.build:gradle:4.0.0'
+    implementation 'commons-io:commons-io:2.11.0'
+}
+
+java {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+
+gradlePlugin {
+    plugins {
+        routerPlugin {
+            id = 'com.example.router.plugin'
+            implementationClass = 'com.example.router.plugin.RouterCodeInjectPlugin'
+        }
+    }
+}
+
+publishing {
+    publications {
+        // 1. 主插件发布
+        routerPlugin(MavenPublication) {
+            artifactId = 'router-plugin'
+            from components.java
+
+            pom {
+                name = 'Router Code Injection Plugin'
+                description = 'Plugin for injecting code into LogisticsCenter'
+                url = 'https://github.com/your/repo'
+            }
+        }
+
+        // 2. 插件标记发布
+        pluginMarker(MavenPublication) {
+            artifactId = 'com.example.router.plugin.gradle.plugin'
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+// 关键修复：安全地禁用默认发布
+afterEvaluate {
+    // 安全地禁用默认的 pluginMaven 发布
+    def pluginMavenTasks = [
+            'generateMetadataFileForPluginMavenPublication',
+            'generatePomFileForPluginMavenPublication',
+            'publishPluginMavenPublicationToMavenLocal'
+    ]
+
+    pluginMavenTasks.each { taskName ->
+        def task = tasks.findByName(taskName)
+        if (task) {
+            task.enabled = false
+            println "已禁用任务: $taskName"
+        }
+    }
+}
+
+// 添加诊断任务
+task debugPublications {
+    doLast {
+        println "=== 有效发布任务 ==="
+        tasks.withType(PublishToMavenRepository).each { task ->
+            if (task.enabled) {
+                println "- ${task.name}"
+                println "  出版物: ${task.publication.groupId}:${task.publication.artifactId}:${task.publication.version}"
+            }
+        }
+        println "=================="
+    }
+}
