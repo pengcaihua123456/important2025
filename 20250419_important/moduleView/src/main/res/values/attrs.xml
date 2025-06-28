@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AnimationCardView">
+        <attr name="lightColor" format="color" />
+        <attr name="lightWidth" format="dimension" />
+        <attr name="lightDuration" format="integer" />
+        <attr name="cornerRadius" format="dimension" />
+        <attr name="cardBackground" format="color" />
+        <attr name="lightEnabled" format="boolean" />
+    </declare-styleable>
+</resources>

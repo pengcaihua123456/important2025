@@ -1,17 +1,18 @@
 rootProject.name='important2025'
 include ':app'
-include ':moduleAsm'
+include ':moduleMatrixAsm'
 include ':moduleMatrix'
 include ':module_common'
 include ':module_home'
 include ':module_cart'
 include ':moduleBufferKnifeAntotations'
 include ':moduleBufferKnife'
-include ':moduleAsmArounter'
+include ':module_AsmArounter'
 
 
 //可改，可不改！
 //setting里面的gradle :防止生成多个插件!
 //        include ':moduleAsmArounter'
 //project(':moduleAsmArounter').name = 'router-plugin' // 重命名模块
-include ':moduledDesign'
+include ':moduleDesign'
+include ':moduleView'

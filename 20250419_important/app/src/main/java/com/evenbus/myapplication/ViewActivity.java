@@ -7,12 +7,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.evenbus.myapplication.view.charge.AnimVivoActivity;
-import com.evenbus.myapplication.view.circle.CircleChargeActivity;
-import com.evenbus.myapplication.view.extand.ExpandActivity;
-import com.evenbus.myapplication.view.flow.FlowViewActivity;
-import com.evenbus.myapplication.view.radio.RadioFrequencyUltraActivity;
-import com.evenbus.myapplication.view.wheel.WheelActivity;
+import com.evenbus.view.charge.AnimVivoActivity;
+import com.evenbus.view.circle.CircleChargeActivity;
+import com.evenbus.view.extand.ExpandActivity;
+import com.evenbus.view.flow.FlowViewActivity;
+import com.evenbus.view.radio.RadioFrequencyUltraActivity;
+import com.evenbus.view.wheel.WheelActivity;
 
 public class ViewActivity extends AppCompatActivity {
 
