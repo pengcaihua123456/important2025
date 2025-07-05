@@ -1,11 +1,52 @@
 plugins {
-    id 'java-library'
+    id 'com.android.library'
 }
 java {
     sourceCompatibility JavaVersion.VERSION_11
     targetCompatibility JavaVersion.VERSION_11
 }
 
+
+android {
+
+    compileSdkVersion 29
+    defaultConfig {
+        minSdkVersion 24
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        // 否则arount会报错
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    buildFeatures {
+        aidl true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+
+
+
+
+
 dependencies {
-//    implementation project(':module_common')
+    implementation project(':module_common')
+    implementation 'androidx.recyclerview:recyclerview:1.2.1' // 最新稳定版
 }
