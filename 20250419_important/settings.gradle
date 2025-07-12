@@ -16,3 +16,4 @@ include ':module_AsmArounter'
 //project(':moduleAsmArounter').name = 'router-plugin' // 重命名模块
 include ':moduleDesign'
 include ':moduleView'
+include ':moduleOkhttp'

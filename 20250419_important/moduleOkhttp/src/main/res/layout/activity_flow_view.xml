@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="热门标签"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.evenbus.view.flow.FlowLayout
+        android:id="@+id/flow_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp">
+    </com.evenbus.view.flow.FlowLayout>
+
+    <com.evenbus.view.flow.ScrollViewFlowLayout
+        android:id="@+id/scrollable_flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="16dp" />
+
+
+    <com.evenbus.view.flow.ScrollableFlowLayout
+        android:id="@+id/scrollableflow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="16dp">
+
+    </com.evenbus.view.flow.ScrollableFlowLayout>
+</LinearLayout>

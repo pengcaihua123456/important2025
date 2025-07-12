@@ -49,4 +49,14 @@ dependencies {
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation 'androidx.recyclerview:recyclerview:1.2.1' // 最新稳定版
+
+
+    // Retrofit 核心库
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // Gson 转换器（用于 JSON 解析）
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // 可选：OkHttp 日志拦截器（调试网络请求）
+    api 'com.squareup.okhttp3:logging-interceptor:4.9.3'
 }

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+>
+
+    <!-- 标题区域 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="语音助手"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- 状态显示区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            />
+
+        <TextView
+            android:id="@+id/status_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="准备就绪"
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <!-- 结果显示区域 -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginBottom="16dp"
+        tools:ignore="MissingClass">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+   >
+
+            <TextView
+                android:id="@+id/result_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="识别结果将显示在这里..."
+                android:textSize="18sp"
+            />
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 策略选择区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/fast_btn"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="快速识别"
+
+            android:textColor="@android:color/white"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/accurate_btn"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="准确识别"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <!-- 麦克风按钮 -->
+    <Button
+        android:id="@+id/start_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="开始语音输入"
+        android:textSize="18sp"
+        android:drawablePadding="8dp"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="16dp"
+ />
+
+    <!-- 语音合成按钮 -->
+    <Button
+        android:id="@+id/speak_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="语音合成测试"
+        android:textSize="18sp"
+        android:drawablePadding="8dp"
+        android:textColor="@android:color/white"
+     />
+
+</LinearLayout>

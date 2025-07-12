@@ -1,15 +1,11 @@
 plugins {
     id 'com.android.library'
 }
-java {
-    sourceCompatibility JavaVersion.VERSION_11
-    targetCompatibility JavaVersion.VERSION_11
-}
-
 
 android {
 
     compileSdkVersion 29
+
     defaultConfig {
         minSdkVersion 24
 
@@ -22,10 +18,6 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
-    }
-
-    buildFeatures {
-        aidl true
     }
 
     buildTypes {
@@ -41,13 +33,7 @@ android {
     }
 }
 
-
-
-
-
-
 dependencies {
-    implementation project(':module_common')
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.cardview:cardview:1.0.0'// 最新稳定版
+//    implementation 'androidx.fragment:fragment:1.1.0'
+    api project(':module_common')
 }

@@ -80,5 +80,6 @@ dependencies {
     implementation project(':moduleDesign') // 注解处理器模块
     // 注解处理器模块
     implementation project(':moduleView') // 注解处理器模块
+    api project(':moduleOkhttp') // 注解处理器模块
 
 }
