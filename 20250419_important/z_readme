@@ -11,6 +11,9 @@
 6.架构_基于组件化的APT            moduleBufferKnife|moduleBufferKnifeAntotations
 7.架构_Arounter asm 字节码插桩    moduleAsmArounter
 8.架构_设计模式                   moduledDesign
+单列，构造者，模板方法，享元模式，适配器，外观模式
+工厂，策略，代理，观察者，责任链
+https://juejin.cn/post/7525320525074792489
 ----------------------------------------------
 github仓库
 https://github.com/pengcaihua123456/important2025/tree/main/20250419_important
