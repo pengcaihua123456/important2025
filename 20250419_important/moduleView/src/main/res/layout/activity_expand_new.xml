@@ -6,6 +6,13 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MIN版本 "
+        android:textSize="18sp"
+        android:textStyle="bold" />
     <com.evenbus.view.extand.AnimationCardView
         android:id="@+id/smartCard"
         android:layout_width="wrap_content"
@@ -58,9 +65,15 @@
         android:onClick="toggleCard"/>
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="PLus版本 "
+        android:textSize="18sp"
+        android:textStyle="bold" />
     <com.evenbus.view.extand.AnimationCardViewPlus
         android:id="@+id/smartCardplus"
-        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -105,6 +118,14 @@
     </com.evenbus.view.extand.AnimationCardViewPlus>
 
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="流光版本 "
+        android:textSize="18sp"
+        android:textStyle="bold" />
     <com.evenbus.view.extand.AnimationCardViewMiniPlus
         android:id="@+id/cardView"
         android:layout_width="300dp"

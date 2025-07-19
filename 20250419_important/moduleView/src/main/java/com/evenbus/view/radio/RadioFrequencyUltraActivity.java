@@ -17,6 +17,7 @@ public class RadioFrequencyUltraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_radio_view);
 
+        setTitle("收音机标尺");
 
         PerfectWheelView wheelView = findViewById(R.id.wheelView);
 

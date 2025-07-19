@@ -4,33 +4,68 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="Mini版本"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
     <com.evenbus.view.radio.RadioFrequencyMiniView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#aaffff" />
 
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="正常版本"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
     <com.evenbus.view.radio.RadioFrequencyView
         android:layout_width="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="5dp"
         android:layout_height="100dp"
         android:background="#aaffff" />
 
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="PLUS版本"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
     <com.evenbus.view.radio.RadioFrequencyPlusView
         android:layout_width="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="5dp"
         android:layout_height="100dp"
         android:background="#aaffff" />
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="ULTRA版本"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
 
     <com.evenbus.view.radio.RadioFrequencyUltraView
         android:id="@+id/animation_view"
         android:layout_width="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="5dp"
         android:layout_height="100dp"
         android:background="#aaffff" />
 
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="完美版本"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
     <com.evenbus.view.wheel.PerfectWheelView
         android:id="@+id/wheelView"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center"
         android:layout_width="200dp"
         android:layout_height="80dp">

@@ -13,5 +13,6 @@ public class WheelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wheel_view);
+        setTitle("自定义3D滚轮，时间滚轮");
     }
 }

@@ -4,27 +4,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="Mini版本"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
     <com.evenbus.view.wheel.WheelViewMini
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#aaffff" />
 
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="正常版本"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
     <com.evenbus.view.wheel.WheelView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#aaffff" />
 
 
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="中间对齐版本"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
     <com.evenbus.view.wheel.CenterWheelView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#aaffff" />
 
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="完整的版本版本"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
     <com.evenbus.view.wheel.FullRangeWheelView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#aaffff" />
 
+    <TextView
+        android:gravity="center_horizontal"
+        android:text="3D滚轮版本"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
     <com.evenbus.view.wheel.LoopWheelView
         android:layout_width="match_parent"
         android:layout_height="100dp"
