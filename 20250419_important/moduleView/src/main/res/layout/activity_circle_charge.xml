@@ -1,19 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#000000"
     android:padding="16dp">
 
-   <com.evenbus.view.circle.CircleChargeAnimationView
-       android:layout_width="300dp"
-       android:layout_height="300dp">
-   </com.evenbus.view.circle.CircleChargeAnimationView>
+
+
+    <com.evenbus.view.charging.view.HwChargingView
+        android:id="@+id/hw_charging"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <com.evenbus.view.circle.CircleChargeAnimationViewReally
+        android:id="@+id/chargeAnimationViewReally"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="250dp"
+        android:layout_height="250dp">
+    </com.evenbus.view.circle.CircleChargeAnimationViewReally>
+
+
+    <com.evenbus.view.circle.CircleChargeAnimationViewPlus
+        android:id="@+id/chargeAnimationViewPlus"
+        android:background="#000000"
+        android:layout_width="300dp"
+        android:visibility="gone"
+        android:layout_height="300dp">
+    </com.evenbus.view.circle.CircleChargeAnimationViewPlus>
+
+    <com.evenbus.view.circle.CircleChargeAnimationView
+        android:id="@+id/chargeAnimationView"
+        android:layout_width="300dp"
+        android:visibility="gone"
+        android:layout_height="300dp">
+    </com.evenbus.view.circle.CircleChargeAnimationView>
 
 
     <com.evenbus.view.circle.CircleChargeAnimationViewMini
         android:layout_width="300dp"
+        android:visibility="gone"
         android:layout_height="300dp">
     </com.evenbus.view.circle.CircleChargeAnimationViewMini>
 
-</LinearLayout>
+</FrameLayout>

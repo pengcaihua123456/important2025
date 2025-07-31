@@ -5,10 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class CircleChargeAnimationView extends View {
+public class CircleChargeAnimationViewReally extends View {
     // 圆环参数
     private Paint mRingPaint;
     private RectF mRingRect;
@@ -43,7 +43,7 @@ public class CircleChargeAnimationView extends View {
     // 粒子系统
     private List<Particle> mParticles = new ArrayList<>();
     private List<Particle> mPendingParticles = new ArrayList<>();
-    private Paint mParticlePaint;
+    private Paint mParticlePaint; // 重用Paint对象
 
     private Random mRandom = new Random();
     private long mLastParticleTime = 0;
@@ -55,25 +55,20 @@ public class CircleChargeAnimationView extends View {
     private float mSafeZoneRadius;
 
     // 水滴吸附效果参数
-    private float DROP_ATTRACTION_RANGE = 1.5f; // 圆环外1.5倍半径范围
-    private float DROP_ABSORB_DISTANCE = 0.8f; // 吸附融合距离
-    private float DROP_ABSORB_SPEED_FACTOR = 3.0f; // 吸附加速因子
-    private float DROP_SIZE_FACTOR = 1.5f; // 水滴大小因子
+    private float DROP_ATTRACTION_RANGE = 1.2f; // 圆环外1.2倍半径范围
+    private float DROP_ABSORB_DISTANCE = 0.7f; // 吸附融合距离
+    private float DROP_ABSORB_SPEED_FACTOR = 2.5f; // 吸附加速因子
 
-    // 融合点效果
-    private List<FusionPoint> mFusionPoints = new ArrayList<>();
-    private Paint mFusionPaint;
+    // 涟漪效果
+    private List<Ripple> mRipples = new ArrayList<>();
+    private Paint mRipplePaint; // 重用Paint对象
 
-    // 水滴融合效果
-    private List<WaterDrop> mWaterDrops = new ArrayList<>();
-    private Paint mWaterDropPaint;
-
-    public CircleChargeAnimationView(Context context) {
+    public CircleChargeAnimationViewReally(Context context) {
         super(context);
         init();
     }
 
-    public CircleChargeAnimationView(Context context, AttributeSet attrs) {
+    public CircleChargeAnimationViewReally(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -96,18 +91,14 @@ public class CircleChargeAnimationView extends View {
         mTextPaint.setColor(Color.WHITE);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
 
-        // 初始化粒子画笔
+        // 初始化粒子画笔（重用）
         mParticlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mParticlePaint.setStyle(Paint.Style.FILL);
 
-        // 初始化融合点画笔
-        mFusionPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mFusionPaint.setStyle(Paint.Style.FILL);
-
-        // 初始化水滴画笔
-        mWaterDropPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mWaterDropPaint.setStyle(Paint.Style.FILL);
-        mWaterDropPaint.setStrokeWidth(2);
+        // 初始化涟漪画笔（重用）
+        mRipplePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mRipplePaint.setStyle(Paint.Style.STROKE);
+        mRipplePaint.setStrokeWidth(4);
 
         setBackgroundColor(Color.BLACK);
     }
@@ -156,20 +147,17 @@ public class CircleChargeAnimationView extends View {
         // 生成新粒子
         generateParticles();
 
-        // 绘制黄色内圆
-        canvas.drawCircle(mCenterX, mCenterY, mInnerCircleRadius, mInnerCirclePaint);
-
         // 绘制圆环
         canvas.drawArc(mRingRect, 0, 360, false, mRingPaint);
 
-        // 绘制水滴融合效果
-        drawWaterDrops(canvas);
-
-        // 绘制融合点
-        drawFusionPoints(canvas);
+        // 绘制黄色内圆
+//        canvas.drawCircle(mCenterX, mCenterY, mInnerCircleRadius, mInnerCirclePaint);
 
         // 绘制粒子并更新
         drawAndUpdateParticles(canvas);
+
+        // 绘制涟漪效果
+        drawRipples(canvas);
 
         // 绘制文本
         float textY = mCenterY - (mTextPaint.descent() + mTextPaint.ascent()) / 2;
@@ -180,133 +168,25 @@ public class CircleChargeAnimationView extends View {
         invalidate();
     }
 
-    private void drawWaterDrops(Canvas canvas) {
-        Iterator<WaterDrop> iterator = mWaterDrops.iterator();
+    private void drawRipples(Canvas canvas) {
+        // 使用重用涟漪画笔
+        Iterator<Ripple> iterator = mRipples.iterator();
         while (iterator.hasNext()) {
-            WaterDrop drop = iterator.next();
+            Ripple ripple = iterator.next();
 
-            // 更新水滴状态
-            drop.update();
+            // 更新涟漪
+            ripple.update();
 
-            // 绘制水滴
-            drawWaterDrop(canvas, drop);
+            // 设置颜色和透明度
+            mRipplePaint.setColor(ripple.color);
+            mRipplePaint.setAlpha((int)(255 * (1 - ripple.progress)));
+
+            // 绘制涟漪
+            canvas.drawCircle(ripple.centerX, ripple.centerY,
+                    ripple.size * ripple.progress, mRipplePaint);
 
             // 检查是否完成
-            if (drop.isComplete()) {
-                iterator.remove();
-            }
-        }
-    }
-
-    private void drawWaterDrop(Canvas canvas, WaterDrop drop) {
-        // 计算水滴位置和大小
-        float angle = drop.angle;
-        float rad = (float) Math.toRadians(angle);
-        float ringOuterRadius = mRingRadius + mRingWidth / 2;
-
-        // 水滴中心位置
-        float dropX = mCenterX + (float) Math.cos(rad) * (ringOuterRadius + drop.offset);
-        float dropY = mCenterY + (float) Math.sin(rad) * (ringOuterRadius + drop.offset);
-
-        // 根据水滴状态计算大小
-        float size = drop.getCurrentSize();
-
-        // 设置水滴颜色
-        int color = getRingColorAtAngle(angle);
-        mWaterDropPaint.setColor(color);
-        mWaterDropPaint.setAlpha((int) (255 * drop.alpha));
-
-        // 绘制水滴本体（椭圆形状）
-        canvas.save();
-        canvas.translate(dropX, dropY);
-        canvas.scale(drop.stretchX, drop.stretchY);
-        canvas.drawCircle(0, 0, size, mWaterDropPaint);
-        canvas.restore();
-
-        // 绘制水滴与圆环的连接部分
-        if (drop.connectionFactor > 0) {
-            drawWaterDropConnection(canvas, drop, dropX, dropY, rad, ringOuterRadius, size);
-        }
-    }
-
-    private void drawWaterDropConnection(Canvas canvas, WaterDrop drop,
-                                         float dropX, float dropY,
-                                         float rad, float ringOuterRadius, float size) {
-        // 计算连接部分的控制点
-        float connectionFactor = drop.connectionFactor;
-
-        // 圆环上的连接点
-        float ringX = mCenterX + (float) Math.cos(rad) * ringOuterRadius;
-        float ringY = mCenterY + (float) Math.sin(rad) * ringOuterRadius;
-
-        // 计算切线方向
-        float tangentX = - (float) Math.sin(rad);
-        float tangentY = (float) Math.cos(rad);
-
-        // 水滴中心点（考虑拉伸变形）
-        float stretchedDropX = dropX;
-        float stretchedDropY = dropY;
-
-        // 计算中间控制点（在圆环和水滴之间）
-        float controlX1 = ringX + tangentX * size * 0.8f;
-        float controlY1 = ringY + tangentY * size * 0.8f;
-
-        float controlX2 = stretchedDropX - tangentX * size * 0.5f;
-        float controlY2 = stretchedDropY - tangentY * size * 0.5f;
-
-        // 创建连接路径
-        Path path = new Path();
-        path.moveTo(ringX, ringY);
-        path.cubicTo(
-                controlX1, controlY1,
-                controlX2, controlY2,
-                stretchedDropX, stretchedDropY
-        );
-
-        // 设置连接部分的透明度
-        int alpha = (int) (200 * connectionFactor * drop.alpha);
-        mWaterDropPaint.setAlpha(alpha);
-        mWaterDropPaint.setStyle(Paint.Style.STROKE);
-        mWaterDropPaint.setStrokeWidth(size * 0.3f);
-
-        // 绘制连接路径
-        canvas.drawPath(path, mWaterDropPaint);
-
-        // 恢复填充模式
-        mWaterDropPaint.setStyle(Paint.Style.FILL);
-    }
-
-    private void drawFusionPoints(Canvas canvas) {
-        Iterator<FusionPoint> iterator = mFusionPoints.iterator();
-        while (iterator.hasNext()) {
-            FusionPoint point = iterator.next();
-
-            // 更新融合点
-            point.update();
-
-            // 设置融合点颜色
-            int color = getRingColorAtAngle(point.angle);
-            mFusionPaint.setColor(color);
-            mFusionPaint.setAlpha((int) (255 * point.alpha));
-
-            // 计算位置
-            float rad = (float) Math.toRadians(point.angle);
-            float ringOuterRadius = mRingRadius + mRingWidth / 2;
-            float x = mCenterX + (float) Math.cos(rad) * ringOuterRadius;
-            float y = mCenterY + (float) Math.sin(rad) * ringOuterRadius;
-
-            // 绘制融合点光晕
-            mFusionPaint.setStyle(Paint.Style.FILL);
-            canvas.drawCircle(x, y, point.getCurrentSize(), mFusionPaint);
-
-            // 绘制融合点高光
-            mFusionPaint.setColor(Color.WHITE);
-            mFusionPaint.setAlpha((int) (180 * point.alpha));
-            canvas.drawCircle(x - point.getCurrentSize()/3, y - point.getCurrentSize()/3,
-                    point.getCurrentSize()/3, mFusionPaint);
-
-            // 检查是否完成
-            if (point.isComplete()) {
+            if (ripple.progress >= 1.0f) {
                 iterator.remove();
             }
         }
@@ -351,9 +231,8 @@ public class CircleChargeAnimationView extends View {
                 // 随机移动速度
                 float speed = 0.01f + mRandom.nextFloat() * 0.04f;
 
-                // 计算目标位置在圆环上的颜色 - 使用修正后的角度
-                float colorAngle = (angle + 270) % 360; // 修正颜色角度
-                int targetColor = getRingColorAtAngle(colorAngle);
+                // 计算目标位置在圆环上的颜色
+                int targetColor = getRingColorAtAngle(angle);
 
                 // 起始颜色（半透明）
                 int startColor = Color.argb(100,
@@ -364,8 +243,7 @@ public class CircleChargeAnimationView extends View {
                 mParticles.add(new Particle(
                         startX, startY, startSize, startColor,
                         targetX, targetY, targetSize, speed, targetColor,
-                        mCenterX, mCenterY, mRingRadius, mRingWidth, mInnerCircleRadius,
-                        colorAngle // 传入颜色角度
+                        mCenterX, mCenterY, mRingRadius, mRingWidth, mInnerCircleRadius
                 ));
             }
         }
@@ -374,10 +252,6 @@ public class CircleChargeAnimationView extends View {
     private int getRingColorAtAngle(float angle) {
         // 直接使用传入的角度（0°指向顶部）
         float normalizedPos = angle / 360f;
-
-        // 确保角度在0-1范围内
-        normalizedPos = normalizedPos % 1.0f;
-        if (normalizedPos < 0) normalizedPos += 1.0f;
 
         // 根据角度位置返回精确颜色
         if (normalizedPos < 0.25f) {
@@ -390,8 +264,7 @@ public class CircleChargeAnimationView extends View {
             float fraction = (normalizedPos - 0.5f) / 0.25f;
             return interpolateColor(mRingColors[2], mRingColors[3], fraction);
         } else {
-            float fraction = (normalizedPos - 0.75f) / 0.25f;
-            return interpolateColor(mRingColors[3], mRingColors[0], fraction);
+            return mRingColors[3];
         }
     }
 
@@ -426,8 +299,7 @@ public class CircleChargeAnimationView extends View {
             particle.update(mPendingParticles);
 
             // 设置粒子颜色和透明度
-            int currentColor = particle.getCurrentColor();
-            mParticlePaint.setColor(currentColor);
+            mParticlePaint.setColor(particle.getCurrentColor());
             mParticlePaint.setAlpha(particle.alpha);
 
             // 绘制粒子
@@ -437,7 +309,6 @@ public class CircleChargeAnimationView extends View {
 
                 // 应用拉伸变换
                 canvas.translate(particle.x, particle.y);
-                canvas.rotate(particle.stretchAngle);
                 canvas.scale(particle.stretchX, particle.stretchY);
                 canvas.translate(-particle.x, -particle.y);
 
@@ -459,8 +330,15 @@ public class CircleChargeAnimationView extends View {
 
         // 在遍历结束后添加新粒子
         if (!mPendingParticles.isEmpty()) {
+            // 调试日志：显示添加的粒子数量
+            Log.d("ParticleSystem", "Adding " + mPendingParticles.size() + " new particles");
             mParticles.addAll(mPendingParticles);
             mPendingParticles.clear();
+        }
+
+        // 调试日志：显示当前粒子总数
+        if (mParticles.size() > 50) {
+            Log.d("ParticleSystem", "Total particles: " + mParticles.size());
         }
     }
 
@@ -521,7 +399,6 @@ public class CircleChargeAnimationView extends View {
         boolean isStretched = false;
         float stretchX = 1.0f;
         float stretchY = 1.0f;
-        float stretchAngle = 0f;
 
         // 碰撞检测
         private float mCenterX, mCenterY;
@@ -534,15 +411,10 @@ public class CircleChargeAnimationView extends View {
         private float mLifeTime = 0f;
         private static final float MAX_LIFE_TIME = 5.0f; // 粒子最多存在5秒
 
-        // 粒子角度（用于融合效果）
-        private float mAngle;
-        private float mColorAngle; // 专门用于颜色计算的角度
-
         Particle(float startX, float startY, float startSize, int startColor,
                  float targetX, float targetY, float targetSize, float speed,
                  int targetColor, float centerX, float centerY,
-                 float ringRadius, float ringWidth, float innerCircleRadius,
-                 float colorAngle) {
+                 float ringRadius, float ringWidth, float innerCircleRadius) {
             // 初始化位置
             this.startX = this.x = startX;
             this.startY = this.y = startY;
@@ -565,18 +437,11 @@ public class CircleChargeAnimationView extends View {
             this.mRingWidth = ringWidth;
             this.mInnerCircleRadius = innerCircleRadius;
             this.mOriginalSpeed = speed;
-            this.mColorAngle = colorAngle; // 保存颜色角度
-
-            // 计算初始角度
-            this.mAngle = (float) Math.toDegrees(Math.atan2(startY - centerY, startX - centerX));
         }
 
         void update(List<Particle> newParticles) {
             // 更新生命周期
             mLifeTime += 0.016f; // 假设每帧约16ms
-
-            // 更新角度
-            mAngle = (float) Math.toDegrees(Math.atan2(y - mCenterY, x - mCenterX));
 
             // 检查生命周期结束
             if (mLifeTime > MAX_LIFE_TIME) {
@@ -593,7 +458,7 @@ public class CircleChargeAnimationView extends View {
             float ringOuterRadius = mRingRadius + mRingWidth / 2;
 
             // 检查是否进入水滴吸附范围
-            if (!mIsAttracted && distance > ringOuterRadius && distance < ringOuterRadius * DROP_ATTRACTION_RANGE) {
+            if (!mIsAttracted && distance < ringOuterRadius * DROP_ATTRACTION_RANGE) {
                 startAttractionAnimation();
             }
 
@@ -641,9 +506,6 @@ public class CircleChargeAnimationView extends View {
 
             // 吸附时加速
             speed = mOriginalSpeed * DROP_ABSORB_SPEED_FACTOR;
-
-            // 计算拉伸角度（垂直于圆环方向）
-            stretchAngle = (float) Math.toDegrees(angle);
         }
 
         private void updateAttractionAnimation(List<Particle> newParticles) {
@@ -657,41 +519,92 @@ public class CircleChargeAnimationView extends View {
             x = mAttractionStartX + (mAttractionTargetX - mAttractionStartX) * easedProgress;
             y = mAttractionStartY + (mAttractionTargetY - mAttractionStartY) * easedProgress;
 
-            // 变形效果（接近圆环时拉伸）
-            float stretchFactor;
-            if (mAttractionProgress < 0.5f) {
+            // 重置变形
+            isStretched = false;
+            stretchX = 1.0f;
+            stretchY = 1.0f;
+
+            // 大小变化（接近时变形）
+            float sizeFactor;
+            if (mAttractionProgress < 0.7f) {
                 // 初期轻微膨胀
-                stretchFactor = 1 + (0.5f * (mAttractionProgress / 0.5f));
-                isStretched = false;
+                sizeFactor = 1 + (0.3f * (mAttractionProgress / 0.7f));
             } else {
                 // 后期拉伸变形
-                stretchFactor = 1.5f;
-                isStretched = true;
+                float stretchFactor = (mAttractionProgress - 0.7f) / 0.3f;
+                sizeFactor = 1.3f - (0.3f * stretchFactor);
 
                 // X方向拉伸，Y方向压缩（模拟水滴接触时的变形）
-                float stretchAmount = (mAttractionProgress - 0.5f) / 0.5f;
-                stretchX = 1.0f + 0.8f * stretchAmount;
-                stretchY = 1.0f - 0.4f * stretchAmount;
+                stretchX = 1.0f + 0.5f * stretchFactor;
+                stretchY = 1.0f - 0.3f * stretchFactor;
+                isStretched = true;
             }
 
-            size = mAttractionStartSize * stretchFactor;
+            size = mAttractionStartSize * sizeFactor;
 
             // 接近吸附点时触发融合
             if (mAttractionProgress > DROP_ABSORB_DISTANCE) {
                 // 创建融合效果
-                createAbsorbEffect();
+                createAbsorbEffect(newParticles);
 
                 // 标记粒子为完成吸附
                 mCollided = true;
             }
         }
 
-        private void createAbsorbEffect() {
-            // 1. 创建水滴融合效果
-            mWaterDrops.add(new WaterDrop(mAngle, size * DROP_SIZE_FACTOR, getCurrentColor()));
+        private void createAbsorbEffect(List<Particle> newParticles) {
+            // 1. 创建涟漪效果
+            int rippleColor = getCurrentColor();
+            float rippleSize = size * 3.0f;
 
-            // 2. 创建融合点效果
-            mFusionPoints.add(new FusionPoint(mAngle, size * 1.2f));
+            mRipples.add(new Ripple(x, y, rippleSize, rippleColor));
+
+            // 2. 创建小水滴飞溅效果
+            createSplashParticles(newParticles);
+        }
+
+        private void createSplashParticles(List<Particle> newParticles) {
+            // 检查是否还能添加新粒子
+            int totalParticles = mParticles.size() + newParticles.size();
+            if (totalParticles >= MAX_PARTICLES - 5) {
+                return; // 避免超过最大限制
+            }
+
+            // 创建3-5个小水滴粒子
+            int splashCount = 3 + mRandom.nextInt(3);
+            for (int i = 0; i < splashCount; i++) {
+                // 随机角度
+                float angle = mRandom.nextFloat() * 360;
+                float rad = (float) Math.toRadians(angle);
+
+                // 起始位置在当前粒子位置
+                float splashStartX = x;
+                float splashStartY = y;
+
+                // 目标位置（随机偏移）
+                float splashDistance = size * (2 + mRandom.nextFloat() * 3);
+                float splashTargetX = x + (float) Math.cos(rad) * splashDistance;
+                float splashTargetY = y + (float) Math.sin(rad) * splashDistance;
+
+                // 大小和速度
+                float splashSize = size * (0.3f + mRandom.nextFloat() * 0.3f);
+                float splashSpeed = speed * (0.5f + mRandom.nextFloat());
+
+                // 创建粒子 - 使用极低透明度而不是完全透明
+                Particle splash = new Particle(
+                        splashStartX, splashStartY, splashSize, getCurrentColor(),
+                        splashTargetX, splashTargetY, splashSize * 0.1f, splashSpeed,
+                        Color.argb(10, 0, 0, 0), // 极低透明度
+                        mCenterX, mCenterY, mRingRadius, mRingWidth, mInnerCircleRadius
+                );
+
+                // 飞溅粒子直接进入消失状态
+                splash.mCollided = false;
+                splash.alpha = 200; // 半透明
+
+                // 添加到临时列表
+                newParticles.add(splash);
+            }
         }
 
         // 获取当前颜色（不包含透明度）
@@ -705,92 +618,23 @@ public class CircleChargeAnimationView extends View {
         }
     }
 
-    // 融合点效果类
-    private class FusionPoint {
-        float angle;
-        float startSize;
-        float progress = 0f;
-        final float duration = 1.0f; // 持续1秒
-        float alpha = 1.0f;
-
-        FusionPoint(float angle, float startSize) {
-            this.angle = angle;
-            this.startSize = startSize;
-        }
-
-        void update() {
-            progress = Math.min(progress + 0.03f, 1.0f);
-            alpha = 1.0f - progress;
-        }
-
-        float getCurrentSize() {
-            // 大小先增大后减小
-            if (progress < 0.3f) {
-                return startSize * (1 + progress * 2.0f);
-            } else {
-                return startSize * (1.6f - (progress - 0.3f) * 1.5f);
-            }
-        }
-
-        boolean isComplete() {
-            return progress >= 1.0f;
-        }
-    }
-
-    // 水滴融合效果类
-    private class WaterDrop {
-        float angle;
-        float startSize;
-        float progress = 0f;
-        final float duration = 1.5f; // 持续1.5秒
-        float alpha = 1.0f;
+    // 涟漪效果类
+    private class Ripple {
+        float centerX, centerY;
+        float size;
         int color;
-        float connectionFactor = 0f; // 连接部分强度
-        float offset = 0f; // 偏移量
-        float stretchX = 1.0f; // X方向拉伸
-        float stretchY = 1.0f; // Y方向拉伸
+        float progress = 0f;
+        final float speed = 0.05f;
 
-        WaterDrop(float angle, float startSize, int color) {
-            this.angle = angle;
-            this.startSize = startSize;
+        Ripple(float x, float y, float size, int color) {
+            this.centerX = x;
+            this.centerY = y;
+            this.size = size;
             this.color = color;
-            this.offset = startSize * 0.5f; // 初始偏移
         }
 
         void update() {
-            progress = Math.min(progress + 0.02f, 1.0f);
-
-            // 水滴行为：先出现，然后被吸收
-            if (progress < 0.3f) {
-                // 第一阶段：水滴出现
-                alpha = progress / 0.3f;
-                connectionFactor = progress / 0.3f;
-                offset = startSize * (1 - progress / 0.3f) * 0.5f;
-            } else if (progress < 0.7f) {
-                // 第二阶段：水滴被吸收
-                alpha = 1.0f;
-                connectionFactor = 1.0f;
-                offset = 0;
-                stretchY = 1.0f - (progress - 0.3f) / 0.4f * 0.5f;
-            } else {
-                // 第三阶段：水滴消失
-                alpha = 1.0f - (progress - 0.7f) / 0.3f;
-                connectionFactor = 1.0f - (progress - 0.7f) / 0.3f;
-                stretchY = 0.5f;
-            }
-        }
-
-        float getCurrentSize() {
-            if (progress < 0.7f) {
-                return startSize;
-            } else {
-                // 逐渐缩小
-                return startSize * (1 - (progress - 0.7f) / 0.3f);
-            }
-        }
-
-        boolean isComplete() {
-            return progress >= 1.0f;
+            progress = Math.min(progress + speed, 1.0f);
         }
     }
 }
