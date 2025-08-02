@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.evenbus.myapplication.R;
+import com.example.module_memory.R;
+
 
 public class OomOriginImageActivity extends AppCompatActivity {
 

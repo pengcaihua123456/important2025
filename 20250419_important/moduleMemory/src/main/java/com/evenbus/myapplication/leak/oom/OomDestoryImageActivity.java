@@ -11,15 +11,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.evenbus.myapplication.R;
+import com.example.module_memory.R;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class OomQueueImageActivity extends AppCompatActivity {
-
-    private static final String TAG="OomQueueImageActivity";
-
+public class OomDestoryImageActivity extends AppCompatActivity {
 
     private ImageView mPhotoView;
     private ImageView mPhotoBgView;
@@ -35,23 +30,12 @@ public class OomQueueImageActivity extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"onClick");
-                Bitmap bitmap2 = decodeSampledBitmapFromResource(getResources(), R.mipmap.smart, 1000, 1000);
-                Bitmap bitmap3 = decodeSampledBitmapFromResource(getResources(), R.mipmap.big, 1000, 1000);
-                Bitmap bitmap4= decodeSampledBitmapFromResource(getResources(), R.mipmap.biga, 1000, 1000);
-
-                putPhotoCache(bitmap2);
-                putPhotoCache(bitmap3);
-                putPhotoCache(bitmap4);
+                Bitmap bitmap = decodeSampledBitmapFromResource(getResources(), R.mipmap.smart, 200, 200);
+                loadListener(bitmap);
             }
-
         });
     }
-    private static final List<Bitmap> sImageCache = new ArrayList<>();
-    private void putPhotoCache(Bitmap bitmap) {
-        // 错误2：加入静态缓存
-        sImageCache.add(bitmap);
-    }
+
 
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
@@ -89,6 +73,21 @@ public class OomQueueImageActivity extends AppCompatActivity {
         }
 
         return inSampleSize;
+    }
+    private void loadListener(Bitmap bitmap) {
+        mPhotoView.setImageBitmap(bitmap);
+        // 错误3：监听器未正确移除
+        mPhotoView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                Log.d("OomDestoryImageActivity","onViewAttachedToWindow");
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                Log.d("OomDestoryImageActivity","onViewDetachedFromWindow");
+            }
+        });
     }
 
 }

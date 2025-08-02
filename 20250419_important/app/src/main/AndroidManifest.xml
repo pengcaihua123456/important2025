@@ -39,6 +39,7 @@
         <activity android:name=".ArounterActivity"></activity>
         <activity android:name=".OomActivity"></activity>
         <activity android:name=".MatrixActivity"></activity>
+        <activity android:name="com.evenbus.view.type.TypeActivity"></activity>
     </application>
 
 </manifest>

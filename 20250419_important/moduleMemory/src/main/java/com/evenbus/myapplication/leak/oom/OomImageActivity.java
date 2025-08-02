@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.evenbus.myapplication.R;
+import com.example.module_memory.R;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;

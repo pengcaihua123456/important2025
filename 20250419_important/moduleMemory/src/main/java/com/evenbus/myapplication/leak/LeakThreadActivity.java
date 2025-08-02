@@ -1,13 +1,14 @@
 package com.evenbus.myapplication.leak;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeakThreadActivity extends Activity {
+public class LeakThreadActivity extends AppCompatActivity {
     private List<String> list = new ArrayList<String>();
 
     @Override

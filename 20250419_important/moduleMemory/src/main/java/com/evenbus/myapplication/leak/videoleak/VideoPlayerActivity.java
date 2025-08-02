@@ -4,7 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.evenbus.myapplication.R;
+import com.example.module_memory.R;
+
 
 // VideoPlayerActivity.java
 public class VideoPlayerActivity extends AppCompatActivity {

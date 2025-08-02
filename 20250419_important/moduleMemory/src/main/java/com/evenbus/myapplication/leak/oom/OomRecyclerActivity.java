@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.evenbus.myapplication.R;
+import com.example.module_memory.R;
 
 import java.util.ArrayList;
 import java.util.List;
