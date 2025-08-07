@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evenbus.myapplication.leak.LeakThreadActivity;
+import com.evenbus.myapplication.leak.oom.OomBigDataActivity;
 import com.evenbus.myapplication.leak.oom.OomDestoryImageActivity;
 import com.evenbus.myapplication.leak.oom.OomOriginImageActivity;
 import com.evenbus.myapplication.leak.oom.OomQueueImageActivity;
@@ -24,6 +25,9 @@ public class OomActivity extends AppCompatActivity {
     public TextView tv_asm;
     public TextView tv_view;
     public TextView tv_arount;
+
+
+    public TextView tv_bigdata;
 
     @BindView(R.id.tv_compler)
     public TextView tv_compler;
@@ -48,6 +52,8 @@ public class OomActivity extends AppCompatActivity {
         tv_view = findViewById(R.id.tv_view);
         tv_compler = findViewById(R.id.tv_compler);
 
+        tv_bigdata= findViewById(R.id.tv_bigdata);
+
 
         tv_arount.setText("线程泄露");
         tv_trace.setText("没有销毁");
@@ -56,6 +62,12 @@ public class OomActivity extends AppCompatActivity {
         tv_view.setText("Recycle OOM");
         tv_compler.setText("内存泄露");
 
+        tv_bigdata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bigdata();
+            }
+        });
 
         tv_trace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +104,12 @@ public class OomActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void bigdata(){
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(OomActivity.this, OomBigDataActivity.class);
+        startActivity(intent);
     }
 
     private void destory(){

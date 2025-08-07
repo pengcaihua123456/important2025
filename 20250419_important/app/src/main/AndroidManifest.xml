@@ -40,6 +40,7 @@
         <activity android:name=".OomActivity"></activity>
         <activity android:name=".MatrixActivity"></activity>
         <activity android:name="com.evenbus.view.type.TypeActivity"></activity>
+        <activity android:name=".leak.oom.OomBigDataActivity"></activity>
     </application>
 
 </manifest>

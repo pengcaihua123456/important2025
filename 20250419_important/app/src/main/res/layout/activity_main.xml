@@ -73,4 +73,16 @@
         app:layout_constraintStart_toStartOf="parent"
         />
 
+    <TextView
+        android:id="@+id/tv_bigdata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="大数据视频流"
+        app:layout_constraintTop_toBottomOf="@+id/tv_compler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
