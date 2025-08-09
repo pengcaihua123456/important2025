@@ -3,6 +3,8 @@ package com.evenbus.myapplication.leak.oom;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,29 +16,135 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.module_memory.R;
 
 
+/**
+ * 图片没有销毁OOM
+ */
 public class OomDestoryImageActivity extends AppCompatActivity {
 
     private ImageView mPhotoView;
-    private ImageView mPhotoBgView;
     private TextView textView;
+    private Bitmap currentBitmap;
+    private LoadImageTask loadImageTask;
+
+    private final View.OnAttachStateChangeListener attachListener =
+            new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View v) {
+                    Log.d("OomDestoryImageActivity", "onViewAttachedToWindow");
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View v) {
+                    Log.d("OomDestoryImageActivity", "onViewDetachedFromWindow");
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mat_photo);
         mPhotoView = findViewById(R.id.photo_view);
-        mPhotoBgView = findViewById(R.id.photo_bg);
         textView = findViewById(R.id.tv_click);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bitmap bitmap = decodeSampledBitmapFromResource(getResources(), R.mipmap.smart, 200, 200);
-                loadListener(bitmap);
-            }
-        });
+
+        // 添加状态变化监听器
+        mPhotoView.addOnAttachStateChangeListener(attachListener);
+
+        // 设置点击事件
+        textView.setOnClickListener(v -> loadImage());
     }
 
+    private void loadImage() {
+        // 取消任何正在进行的任务
+        cancelPendingTask();
 
+        // 启动新任务
+        loadImageTask = new LoadImageTask();
+        loadImageTask.execute();
+    }
+
+    private void setNewBitmap(Bitmap newBitmap) {
+        if (newBitmap == null) return;
+
+        // 保存旧位图引用
+        Bitmap oldBitmap = currentBitmap;
+
+        // 更新当前位图和视图
+        currentBitmap = newBitmap;
+        mPhotoView.setImageBitmap(newBitmap);
+
+        // 安全回收旧位图
+        safeRecycleBitmap(oldBitmap);
+    }
+
+    private void safeRecycleBitmap(Bitmap bitmap) {
+        if (bitmap == null || bitmap.isRecycled()) return;
+
+        // Android 8.0+ 的硬件位图无需手动回收
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (bitmap.getConfig() == Bitmap.Config.HARDWARE) {
+                return;
+            }
+        }
+
+        // 回收非硬件位图
+        bitmap.recycle();
+    }
+
+    private void cancelPendingTask() {
+        if (loadImageTask != null) {
+            loadImageTask.cancel(true);
+            loadImageTask = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // 1. 取消任何正在进行的异步任务
+        cancelPendingTask();
+
+        // 2. 移除视图监听器
+        mPhotoView.removeOnAttachStateChangeListener(attachListener);
+
+    }
+
+    private class LoadImageTask extends AsyncTask<Void, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            // 检查是否已取消
+            if (isCancelled()) return null;
+
+            try {
+                // 在后台线程解码图片
+                return decodeSampledBitmapFromResource(
+                        getResources(), R.mipmap.smart, 200, 200);
+            } catch (Exception e) {
+                Log.e("LoadImageTask", "Error decoding bitmap", e);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            // 检查Activity是否有效
+            if (isFinishing() || isDestroyed()) {
+                safeRecycleBitmap(bitmap); // 回收未使用的位图
+                return;
+            }
+
+            // 更新UI
+            setNewBitmap(bitmap);
+        }
+
+        @Override
+        protected void onCancelled(Bitmap bitmap) {
+            // 任务取消时回收位图
+            safeRecycleBitmap(bitmap);
+        }
+    }
+
+    // 采样解码方法保持不变
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
@@ -74,20 +182,4 @@ public class OomDestoryImageActivity extends AppCompatActivity {
 
         return inSampleSize;
     }
-    private void loadListener(Bitmap bitmap) {
-        mPhotoView.setImageBitmap(bitmap);
-        // 错误3：监听器未正确移除
-        mPhotoView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-            @Override
-            public void onViewAttachedToWindow(View v) {
-                Log.d("OomDestoryImageActivity","onViewAttachedToWindow");
-            }
-
-            @Override
-            public void onViewDetachedFromWindow(View v) {
-                Log.d("OomDestoryImageActivity","onViewDetachedFromWindow");
-            }
-        });
-    }
-
 }

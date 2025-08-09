@@ -16,10 +16,13 @@ import com.example.module_memory.R;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 很多小图片导致的内存
+ */
 public class OomQueueImageActivity extends AppCompatActivity {
 
     private static final String TAG="OomQueueImageActivity";
-
 
     private ImageView mPhotoView;
     private ImageView mPhotoBgView;
@@ -28,6 +31,7 @@ public class OomQueueImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("很多小图片导致的内存");
         setContentView(R.layout.activity_mat_photo);
         mPhotoView = findViewById(R.id.photo_view);
         mPhotoBgView = findViewById(R.id.photo_bg);

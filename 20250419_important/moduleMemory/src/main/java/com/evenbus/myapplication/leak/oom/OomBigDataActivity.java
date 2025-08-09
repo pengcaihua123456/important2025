@@ -21,6 +21,10 @@ import com.example.module_memory.R;
 import java.lang.ref.WeakReference;
 import java.util.Locale;
 
+
+/***
+ * 加载抖音大视频导致的OOM
+ */
 public class OomBigDataActivity extends AppCompatActivity {
 
         private static final String TAG = "VideoStreamDemo";
