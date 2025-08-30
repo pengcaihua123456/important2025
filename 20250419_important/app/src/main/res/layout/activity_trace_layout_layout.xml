@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="视图层次复杂导致的卡顿Demo"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btn_show_nested"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="显示嵌套布局（卡顿）"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btn_show_flat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="显示扁平布局（优化）"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btn_add_dynamic_views"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="动态添加100个视图（卡顿）"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btn_clear_views"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="清除所有视图"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tv_performance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="性能状态: 正常"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_view_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="视图数量: 0"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp"/>
+
+    <ScrollView
+        android:id="@+id/scroll_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#f0f0f0">
+
+        <!-- 这里将动态添加视图 -->
+        <LinearLayout
+            android:id="@+id/container_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </ScrollView>
+
+    <!-- 极度嵌套的布局（默认隐藏） -->
+    <include layout="@layout/heavily_nested_layout"
+        android:visibility="gone"/>
+
+    <!-- 扁平化布局（默认隐藏） -->
+    <include layout="@layout/flat_constraint_layout"
+        android:visibility="gone"/>
+
+</LinearLayout>

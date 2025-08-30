@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Handler频繁invalidate导致卡顿Demo"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btn_start_bad_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="启动错误动画（Handler + invalidate）"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btn_start_good_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="启动正确动画（ValueAnimator）"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/btn_stop_animation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="停止动画"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tv_performance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="性能状态: 正常"
+        android:textSize="16sp"
+        android:textColor="#FF0000"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_invalidate_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="invalidate()调用次数: 0"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_fps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="当前FPS: 0"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- 自定义View，展示错误的Handler+invalidate用法 -->
+    <com.evenbus.myapplication.trace.BadAnimationView
+        android:id="@+id/bad_animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#f0f0f0"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- 性能监控区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="尝试快速滚动下面的列表感受卡顿"
+            android:textSize="12sp"
+            android:textColor="#666666"/>
+
+        <Button
+            android:id="@+id/btn_clear_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清空日志"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <!-- 测试列表，用于感受卡顿 -->
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#10000000"/>
+
+</LinearLayout>

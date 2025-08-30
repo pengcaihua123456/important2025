@@ -1,18 +1,15 @@
 package com.evenbus.myapplication.trace;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+
+
 import android.animation.ValueAnimator;
-import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.animation.LinearInterpolator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,170 +17,181 @@ import com.evenbus.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class LaggyAnimationActivity   extends AppCompatActivity {
+/**
+ * 卡顿动画演示Activity
+ * 该类专门用于演示和测试由于过度绘制和频繁UI更新导致的卡顿现象
+ * 注意：此代码 intentionally 设计为低效，用于性能测试目的
+ */
+public class LaggyAnimationActivity extends AppCompatActivity {
 
-    private static final int ITEM_COUNT = 100; // 使用更多视图
-    private List<View> animatedViews = new ArrayList<>();
-    private boolean isRunning = true;
+    // 主动画视图引用
+    private View animationView;
 
+    // 存储所有子视图的列表 - 使用ArrayList可能导致内存和性能问题
+    private List<View> views = new ArrayList<>();
+
+    /**
+     * Activity创建时的回调方法
+     * @param savedInstanceState 保存的实例状态
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_laggy_animation_per);
+        // 设置布局文件
+        setContentView(R.layout.activity_laggy_animation);
 
-        ViewGroup container = (ViewGroup) findViewById(R.id.animation_container);
+        setTitle("复制动画导致的卡顿");
 
-        // 添加大量复杂视图
-        for (int i = 0; i < ITEM_COUNT; i++) {
-            // 使用自定义View增加绘制复杂度
-            ComplexView view = new ComplexView(this);
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(100, 100);
-            view.setLayoutParams(params);
+        // 获取主动画视图
+        animationView = findViewById(R.id.animation_view);
+
+        // 获取容器视图用于添加子视图
+        ViewGroup container = findViewById(R.id.container);
+
+        // 创建大量视图 - 这是导致卡顿的主要原因之一
+        // 问题1: 创建10000个视图远超Android推荐的最佳实践
+        // 问题2: 每个视图都需要内存分配和初始化，消耗大量资源
+        for (int i = 0; i < 10000; i++) {
+            View view = new View(this);
+            // 设置视图布局参数
+            view.setLayoutParams(new ViewGroup.LayoutParams(20, 20));
+            // 设置视图背景颜色
+            view.setBackgroundColor(Color.RED);
+            // 将视图添加到容器
             container.addView(view);
-            animatedViews.add(view);
+            // 将视图添加到列表以便后续操作
+            views.add(view);
         }
 
-        startExtremeAnimations();
-
-        // 同时执行耗时操作加重卡顿
-        startHeavyTask();
+        // 启动复杂的动画 - 这会进一步加剧卡顿
+        startLaggyAnimation();
     }
 
-    private void startExtremeAnimations() {
-        // 为每个视图创建多个复杂动画
-        for (int i = 0; i < animatedViews.size(); i++) {
-            final View view = animatedViews.get(i);
-
-            // 1. 复杂路径动画
-            final Path path = createComplexPath(i);
-            final PathMeasure pathMeasure = new PathMeasure(path, false);
-            final float pathLength = pathMeasure.getLength();
-
-            // 2. 使用ValueAnimator进行实时计算
-            ValueAnimator pathAnimator = ValueAnimator.ofFloat(0, 1);
-            pathAnimator.setDuration(5000);
-            pathAnimator.setRepeatCount(ValueAnimator.INFINITE);
-            pathAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    if (!isRunning) return;
-
-                    float fraction = (float) animation.getAnimatedValue();
-                    float distance = fraction * pathLength;
-                    float[] pos = new float[2];
-                    pathMeasure.getPosTan(distance, pos, null);
-
-                    // 实时计算并设置多个属性
-                    view.setTranslationX(pos[0]);
-                    view.setTranslationY(pos[1]);
-                    view.setRotation(fraction * 360 * 5);
-                    view.setScaleX(0.5f + (float) Math.sin(fraction * Math.PI * 4));
-                    view.setScaleY(0.5f + (float) Math.cos(fraction * Math.PI * 4));
-
-                    // 强制重绘增加负担
-                    view.invalidate();
-                }
-            });
-            pathAnimator.start();
-
-            // 3. 额外添加颜色变化动画
-            ValueAnimator colorAnimator = ValueAnimator.ofArgb(Color.RED, Color.BLUE);
-            colorAnimator.setDuration(3000);
-            colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
-            colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
-            colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    if (view instanceof ComplexView) {
-                        ((ComplexView) view).setCustomColor((int) animation.getAnimatedValue());
-                    }
-                }
-            });
-            colorAnimator.start();
-        }
-    }
-
-    private Path createComplexPath(int index) {
+    /**
+     * 启动导致卡顿的动画
+     * 这个方法创建了一个复杂的路径动画，并在每帧更新大量视图
+     */
+    private void startLaggyAnimation() {
+        // 创建复杂的运动路径
+        // 问题3: 路径过于复杂，包含50个线段
         Path path = new Path();
-        path.moveTo(0, index * 10);
-        for (int i = 1; i <= 100; i++) { // 非常复杂的路径
-            float x = i * 15;
-            float y = (float) (Math.sin(i * 0.2 + index * 0.1) * 200 + index * 10);
-            path.lineTo(x, y);
+        path.moveTo(0, 0);
+        for (int i = 1; i <= 50; i++) {
+            // 添加随机高度的线段，增加计算复杂度
+            path.lineTo(i * 20, (float) (Math.random() * 500));
         }
-        return path;
-    }
 
-    private void startHeavyTask() {
-        // 在主线程执行耗时计算
-        new Thread(new Runnable() {
+        // 使用PathMeasure来计算路径上的位置
+        final PathMeasure pathMeasure = new PathMeasure(path, false);
+        final float pathLength = pathMeasure.getLength();
+
+        // 创建值动画器
+        ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+        // 设置动画持续时间
+        animator.setDuration(5000);
+        // 设置无限循环
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+        // 使用线性插值器
+        animator.setInterpolator(new LinearInterpolator());
+
+        // 添加动画更新监听器
+        // 问题4: 在每帧动画更新时执行大量操作
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void run() {
-                while (isRunning) {
-                    // 模拟复杂计算
-                    double result = 0;
-                    for (int i = 0; i < 100000; i++) {
-                        result += Math.sqrt(i) * Math.sin(i);
-                    }
-
-                    // 频繁更新UI加重负担
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            TextView tv = (TextView) findViewById(R.id.status_text);
-                            tv.setText("计算值: " + 3);
-                        }
-                    });
-
-                    try {
-                        Thread.sleep(16); // 约60fps的间隔
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+            public void onAnimationUpdate(ValueAnimator animation) {
+                // 将动画更新逻辑提取到单独方法中
+                updateAnimation(animation, pathLength, pathMeasure);
             }
-        }).start();
+        });
+
+        // 启动动画
+        animator.start();
     }
 
+    /**
+     * 更新动画状态 - 这是卡顿的主要来源
+     * 每帧都会调用此方法，执行大量计算和UI更新
+     *
+     * @param animation 动画实例
+     * @param pathLength 路径总长度
+     * @param pathMeasure 路径测量工具
+     */
+    private void updateAnimation(ValueAnimator animation, float pathLength, PathMeasure pathMeasure) {
+        // 获取当前动画进度（0到1之间）
+        float fraction = (float) animation.getAnimatedValue();
+
+        // 计算当前在路径上的距离
+        float distance = fraction * pathLength;
+
+        // 存储位置信息的数组
+        float[] pos = new float[2];
+
+        // 获取路径上指定距离的位置
+        pathMeasure.getPosTan(distance, pos, null);
+
+        // 更新主动画视图的位置
+        animationView.setTranslationX(pos[0]);
+        animationView.setTranslationY(pos[1]);
+
+        // 问题5: 在每帧更新10000个子视图 - 这是性能杀手！
+        // 每次循环都涉及：
+        // - 列表查找（views.get(i)）
+        // - 多个属性设置（setTranslationX, setTranslationY等）
+        // - 数学计算（i * 5, fraction * 360 * 5等）
+        for (int i = 0; i < views.size(); i++) {
+            View view = views.get(i);
+
+            // 设置X轴平移 - 基于主视图位置和索引偏移
+            view.setTranslationX(pos[0] + i * 5);
+
+            // 设置Y轴平移 - 基于主视图位置和索引偏移
+            view.setTranslationY(pos[1] + i * 5);
+
+            // 设置旋转 - 基于动画进度和索引
+            // 问题6: 复杂的数学计算在每帧执行10000次
+            view.setRotation(fraction * 360 * 5);
+
+            // 设置X轴缩放 - 基于动画进度
+            view.setScaleX(0.5f + fraction);
+
+            // 设置Y轴缩放 - 基于动画进度
+            view.setScaleY(0.5f + fraction);
+        }
+
+        // 性能问题总结：
+        // 1. 每帧执行50000次属性设置（10000视图 × 5个属性）
+        // 2. 每帧执行10000次列表查找
+        // 3. 每帧执行大量数学计算
+        // 4. 导致频繁的UI线程阻塞和重绘
+    }
+
+    /**
+     * Activity销毁时的清理工作
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        isRunning = false;
+        // 清理资源，避免内存泄漏
+        if (views != null) {
+            views.clear();
+        }
     }
 
-    // 自定义复杂View增加绘制负担
-    static class ComplexView extends View {
-        private int customColor = Color.RED;
-        private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    /**
+     * 获取当前活动的视图数量
+     * @return 视图数量
+     */
+    public int getViewCount() {
+        return views != null ? views.size() : 0;
+    }
 
-        public ComplexView(Context context) {
-            super(context);
-            paint.setStyle(Paint.Style.FILL);
-        }
-
-        public void setCustomColor(int color) {
-            this.customColor = color;
-            invalidate();
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-
-            // 复杂绘制操作
-            paint.setColor(customColor);
-            canvas.drawCircle(getWidth()/2f, getHeight()/2f, getWidth()/2f, paint);
-
-            // 刻意增加绘制复杂度
-            paint.setColor(Color.WHITE);
-            for (int i = 0; i < 800; i++) {
-                float angle = (float) (i * Math.PI * 2 / 10);
-                float x = (float) (getWidth()/2f + Math.cos(angle) * getWidth()/3f);
-                float y = (float) (getHeight()/2f + Math.sin(angle) * getHeight()/3f);
-                canvas.drawCircle(x, y, getWidth()/10f, paint);
-            }
-        }
+    /**
+     * 停止所有动画（如果需要的话）
+     * 这个方法可以扩展来实现动画停止功能
+     */
+    public void stopAnimations() {
+        // 实现动画停止逻辑
+        // 注意：当前实现中没有保存animator引用，需要修改才能支持停止功能
     }
 }

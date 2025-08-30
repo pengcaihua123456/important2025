@@ -16,6 +16,10 @@ import com.evenbus.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+/**
+ * recycler 主线程耗时！
+ */
 public class TraceRecycleActivity extends AppCompatActivity implements PerformanceAdapter.BindTimeListener {
 
         private PerformanceAdapter adapter;

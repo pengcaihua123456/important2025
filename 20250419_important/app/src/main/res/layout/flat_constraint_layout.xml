@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/flat_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="扁平化布局示例 (ConstraintLayout)"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="嵌套层级: 1"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="另一侧"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@+id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/text_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="左"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/text1"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/text_center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="中"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@+id/guideline2"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/text1"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/text_right"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="右"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@+id/guideline3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text1"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="按钮1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/text2"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="按钮2"
+        app:layout_constraintLeft_toRightOf="@+id/guideline4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text2"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"/>
+
+    <TextView
+        android:id="@+id/text_a"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="A"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/text_left"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/text_b"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="B"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@+id/guideline5"
+        app:layout_constraintRight_toLeftOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/text_center"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/text_c"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="C"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@+id/guideline6"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_right"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/performance_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="使用ConstraintLayout，视图层次扁平，滚动流畅"
+        android:gravity="center"
+        android:textColor="@android:color/holo_green_dark"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_a"
+        android:layout_marginTop="16dp"/>
+
+    <!-- 辅助线 -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.333" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.666" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.333" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.666" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

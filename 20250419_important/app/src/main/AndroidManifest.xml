@@ -17,9 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".trace.TraceRecycleActivity"></activity>
-        <activity android:name=".trace.LaggyAnimationActivity2"></activity>
-        <activity android:name=".trace.LaggyAnimationActivity"></activity>
+
+        <activity android:name=".trace.LaggyAnimationOtherActivity"></activity>
         <activity android:name=".leak.LeakThreadActivity"></activity>
         <activity android:name=".leak.oom.OomOriginImageActivity"></activity>
         <activity android:name=".leak.oom.OomDestoryImageActivity"></activity>
@@ -41,6 +40,13 @@
         <activity android:name=".MatrixActivity"></activity>
         <activity android:name="com.evenbus.view.type.TypeActivity"></activity>
         <activity android:name=".leak.oom.OomBigDataActivity"></activity>
+
+
+        <activity android:name=".trace.TraceLayoutActivity"></activity>
+        <activity android:name=".trace.TraceInvalideActivity"></activity>
+        <activity android:name=".trace.TraceRecycleActivity"></activity>
+        <activity android:name=".trace.LaggyAnimationActivity"></activity>
+
     </application>
 
 </manifest>

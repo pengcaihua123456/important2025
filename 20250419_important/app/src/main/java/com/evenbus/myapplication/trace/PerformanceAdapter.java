@@ -70,7 +70,6 @@ public class PerformanceAdapter extends RecyclerView.Adapter<PerformanceAdapter.
             simulateHeavyWork();
         }
 
-        // 随机改变颜色增加布局复杂度
         if (position % 3 == 0) {
             holder.titleText.setTextColor(Color.RED);
         } else {
@@ -102,22 +101,9 @@ public class PerformanceAdapter extends RecyclerView.Adapter<PerformanceAdapter.
         // 1. 主线程耗时计算
         Random random = new Random();
         long sum = 0;
-        for (int i = 0; i <= 10000000; i++) {
+        for (int i = 0; i <= 100000000; i++) {
             sum += random.nextLong();
         }
 
-        // 2. 不合理的子线程使用（频繁创建和销毁）
-        if (System.currentTimeMillis() % 2 == 0) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(10); // 模拟网络请求或数据库操作
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        }
     }
 }
