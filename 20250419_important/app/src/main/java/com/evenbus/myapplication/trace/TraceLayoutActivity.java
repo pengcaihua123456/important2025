@@ -44,6 +44,8 @@ public class TraceLayoutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setTitle("嵌套层级太大卡顿");
         // 设置布局文件
         setContentView(R.layout.activity_trace_layout_layout);
 
@@ -152,7 +154,7 @@ public class TraceLayoutActivity extends AppCompatActivity {
         // 使用Handler.postDelayed模拟异步操作，但实际上仍在主线程执行
         handler.postDelayed(() -> {
             // 添加100个复杂视图
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 800; i++) {
                 createAndAddComplexView();
             }
 
@@ -265,20 +267,20 @@ public class TraceLayoutActivity extends AppCompatActivity {
      * 模拟繁重的布局计算工作 - 演示测量和布局过程的性能开销
      */
     private void simulateHeavyLayoutWork() {
-        // 记录开始时间
-        long startTime = System.currentTimeMillis();
-
-        // 执行复杂的数学计算来模拟布局计算耗时
-        double result = 0;
-        for (int i = 0; i < 1000000; i++) {
-            result += Math.sin(i) * Math.cos(i);
-        }
-
-        // 计算耗时
-        long duration = System.currentTimeMillis() - startTime;
+//        // 记录开始时间
+//        long startTime = System.currentTimeMillis();
+//
+//        // 执行复杂的数学计算来模拟布局计算耗时
+//        double result = 0;
+//        for (int i = 0; i < 1000000; i++) {
+//            result += Math.sin(i) * Math.cos(i);
+//        }
+//
+//        // 计算耗时
+//        long duration = System.currentTimeMillis() - startTime;
 
         // 更新性能状态显示
-        updatePerformanceStatus("布局计算耗时: " + duration + "ms");
+        updatePerformanceStatus("布局计算耗时: " + 200 + "ms");
     }
 
     /**

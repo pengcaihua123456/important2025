@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.application'
+}
+//apply plugin: 'com.android.application'
+//apply plugin: 'com.tencent.matrix-plugin'
+android {
+    namespace 'com.example.matrixdemo'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.matrixdemo"
+        minSdk 23
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+//   matrix {
+//        trace {
+//            enable = true    //if you don't want to use trace canary, set false
+//            baseMethodMapFile = "${project.buildDir}/matrix_output/Debug.methodmap"
+//            blackListFile = "${project.projectDir}/matrixTrace/blackMethodList.txt"
+//        }
+//    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation group: "com.tencent.matrix", name: "matrix-android-lib", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-android-commons", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-trace-canary", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-io-canary", version: MATRIX_VERSION, changing: true
+    implementation group: "com.tencent.matrix", name: "matrix-memory-canary", version: MATRIX_VERSION, changing: true
+//    implementation group: "com.tencent.matrix", name: "matrix-resource-canary-android", version: lib_thirds_matrix_version, changing: true
+//    implementation group: "com.tencent.matrix", name: "matrix-resource-canary-common", version: lib_thirds_matrix_version, changing: true
+//    implementation group: "com.tencent.matrix", name: "matrix-sqlite-lint-android-sdk", version: lib_thirds_matrix_version, changing: true
+//    implementation group: "com.tencent.matrix", name: "matrix-battery-canary", version: lib_thirds_matrix_version, changing: true
+//    implementation group: "com.tencent.matrix", name: "matrix-hooks", version: lib_thirds_matrix_version, changing: true
+//    implementation group: "com.tencent.matrix", name: "matrix-backtrace", version: lib_thirds_matrix_version, changing: true
+    implementation 'com.blankj:utilcodex:1.31.1'
+
+    def lifecycle_version = "2.5.1"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    // Lifecycles only (without ViewModel or LiveData)
+    // implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+}

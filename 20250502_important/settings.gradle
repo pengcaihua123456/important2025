@@ -1,0 +1,11 @@
+rootProject.name='My Application'
+include ':app'
+include ':moduleAsm'
+
+
+//gradle.rootProject {
+//    afterEvaluate {
+//        println "已注册Transforms: ${it.extensions.findByType(AppExtension)?.transforms}"
+//    }
+//}
+include ':mylibrary'

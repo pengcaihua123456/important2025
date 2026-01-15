@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ATaoDuoduoShadow.iml" filepath="$PROJECT_DIR$/.idea/modules/ATaoDuoduoShadow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_A/ATaoDuoduoShadow.module_A.iml" filepath="$PROJECT_DIR$/.idea/modules/module_A/ATaoDuoduoShadow.module_A.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_A/ATaoDuoduoShadow.module_A.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_A/ATaoDuoduoShadow.module_A.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_A/ATaoDuoduoShadow.module_A.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_A/ATaoDuoduoShadow.module_A.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_A/ATaoDuoduoShadow.module_A.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_A/ATaoDuoduoShadow.module_A.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_B/ATaoDuoduoShadow.module_B.iml" filepath="$PROJECT_DIR$/.idea/modules/module_B/ATaoDuoduoShadow.module_B.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_B/ATaoDuoduoShadow.module_B.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_B/ATaoDuoduoShadow.module_B.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_B/ATaoDuoduoShadow.module_B.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_B/ATaoDuoduoShadow.module_B.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_B/ATaoDuoduoShadow.module_B.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_B/ATaoDuoduoShadow.module_B.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_route.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_route.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_route.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_route.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_route.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_route.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_route.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_route.unitTest.iml" />
+    </modules>
+  </component>
+</project>
