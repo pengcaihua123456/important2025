@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "android.router.literouter"
-        minSdkVersion 24
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -25,7 +25,13 @@ dependencies {
     })
 
     testCompile 'junit:junit:4.12'
-    api project(':module_route') // 直接引用本地模块
-    api project(':module_A') // 直接引用本地模块
-    api project(':module_B') // 直接引用本地模块
+//    api project(':module_route') // 直接引用本地模块
+//    api project(':module_A') // 直接引用本地模块
+//    api project(':module_B') // 直接引用本地模块
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'  // 降级到1.2.0
+    implementation 'com.google.android.material:material:1.2.1'  // 降级到1.2.1
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'androidx.fragment:fragment:1.2.5'  // 降级到1.2.5
 }
