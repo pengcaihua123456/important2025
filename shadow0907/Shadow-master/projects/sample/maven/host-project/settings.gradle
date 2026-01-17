@@ -1,1 +1,9 @@
-include ':sample-host', ':introduce-shadow-lib'
+// host-project/settings.gradle
+
+// 1. 包含所有模块
+include ':sample-host'
+include ':introduce-shadow-lib'
+//include ':common'
+//
+//// 2. 配置 common 模块路径
+//project(':common').projectDir = new File('F:/shadow0907/Shadow-master/projects/sample/maven/common')

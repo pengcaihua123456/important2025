@@ -1,0 +1,81 @@
+// common/build.gradle - 完整可消费的 Android Library 配置
+
+// 关键：使用 plugins 语法，但明确指定版本
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    // 使用新语法（因为 AGP 7.4.2 支持）
+    compileSdk 29
+
+    defaultConfig {
+        minSdk 16
+        targetSdk 28
+
+        // 关键：必须添加测试运行器
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // 关键：消费者混淆规则
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    // 关键：必须配置 buildTypes
+    buildTypes {
+        debug {
+            minifyEnabled false
+            // 关键：添加消费者属性
+            matchingFallbacks = ['debug']
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['release']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // 关键：启用构建配置
+    buildFeatures {
+        buildConfig = true
+    }
+
+    // 关键：配置变体API
+    variantFilter { variant ->
+        if (variant.buildType.name == 'debug') {
+            variant.ignore = false  // 确保 debug 变体不被忽略
+        }
+    }
+}
+
+dependencies {
+    // 必须有依赖，否则 Gradle 可能不注册组件
+    api 'androidx.annotation:annotation:1.2.0'
+    api 'androidx.core:core:1.3.2'
+    api 'androidx.fragment:fragment:1.2.5'  // 降级到1.2.5
+
+    // 关键：必须有测试依赖
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+// 关键：配置发布（这会强制注册组件）
+apply plugin: 'maven-publish'
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.example'
+                artifactId = 'common'
+                version = '1.0.0'
+            }
+        }
+    }
+}

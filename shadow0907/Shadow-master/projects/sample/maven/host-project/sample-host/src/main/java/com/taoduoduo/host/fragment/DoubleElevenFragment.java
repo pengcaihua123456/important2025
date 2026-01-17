@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.taoduoduo.common.CommonConsants;
 import com.tencent.shadow.sample.host.R;
 
 
@@ -23,6 +24,10 @@ public class DoubleElevenFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_double_eleven, container, false);
         TextView textView = view.findViewById(R.id.text_double_eleven);
         textView.setText("双11狂欢节\n\n限时抢购中！\n\n超多优惠等你来！\n\n全场5折起");
+
+        CommonConsants commonConsants;
+//        IPluginUiProvider iPluginUiProvider;
+
         return view;
     }
 }

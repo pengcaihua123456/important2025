@@ -1,13 +1,16 @@
 package com.tencent.shadow.sample.host;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.taoduoduo.common.IPluginUiProvider;
 import com.taoduoduo.host.TaoduoduoMainActivity;
 import com.tencent.shadow.dynamic.host.EnterCallback;
 import com.tencent.shadow.dynamic.host.PluginManager;
@@ -36,6 +39,8 @@ public class MainActivity extends Activity {
                 v.setEnabled(false);//防止点击重入
 
                 PluginManager pluginManager = InitApplication.getPluginManager();
+                Log.d("pengcaihua","pluginManager: "+pluginManager.getClass().getName());
+
                 pluginManager.enter(MainActivity.this, FROM_ID_START_ACTIVITY, new Bundle(), new EnterCallback() {
                     @Override
                     public void onShowLoadingView(View view) {
@@ -85,6 +90,15 @@ public class MainActivity extends Activity {
                     // 在当前 Activity 中跳转
                     Intent intent = new Intent(MainActivity.this, TaoduoduoMainActivity.class);
                     startActivity(intent);
+
+//                    PluginManager pluginManager = InitApplication.getPluginManager();
+//                    PluginLoader pluginLoader = pluginManager.getPluginLoader(pluginKey);
+//
+//                    // 5. 获取插件的ClassLoader
+//                    ClassLoader pluginClassLoader = pluginLoader.getClassLoader();
+//
+//                    IPluginUiProvider provider = (IPluginUiProvider) pluginClassLoader.loadClass("...Double11FragmentProvider").newInstance();
+//                    Fragment fragment=provider.createFragment();
                 }
             });
             linearLayout.addView(callServiceButton);

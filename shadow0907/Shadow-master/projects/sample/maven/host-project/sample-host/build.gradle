@@ -1,14 +1,22 @@
-apply plugin: 'com.android.application'
+// host-project/sample-host/build.gradle
+
+// 使用新插件语法
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion 29
+    // 使用新语法但保持低版本
+    compileSdk 29  // 保持 29，但用新语法
+
     defaultConfig {
         applicationId "com.tencent.shadow.sample.host"
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdk 16    // 保持 16，但用新语法
+        targetSdk 28 // 保持 28，但用新语法
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -18,18 +26,24 @@ android {
             signingConfig.initWith(buildTypes.debug.signingConfig)
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation project(':introduce-shadow-lib')
-
-    //如果introduce-shadow-lib发布到Maven，在pom中写明此依赖，宿主就不用写这个依赖了。
     implementation "com.tencent.shadow.dynamic:host:$shadow_version"
 
-
-    implementation 'androidx.appcompat:appcompat:1.2.0'  // 降级到1.2.0
-    implementation 'com.google.android.material:material:1.2.1'  // 降级到1.2.1
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    implementation 'androidx.fragment:fragment:1.2.5'  // 降级到1.2.5
+    implementation 'androidx.fragment:fragment:1.2.5'
+
+//    implementation project(':common')
+
+    implementation 'com.example:common:1.0.0'
 }

@@ -10,10 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.taoduoduo.common.IPluginUiProvider;
 
 
-
-public class PluginDoubleElevenFragment extends Fragment {
+public class PluginDoubleElevenFragment extends Fragment implements IPluginUiProvider {
 
     public PluginDoubleElevenFragment() {
         // 空的构造函数
@@ -41,5 +41,31 @@ public class PluginDoubleElevenFragment extends Fragment {
         args.putString("param_key", param);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public String getFragmentClassName() {
+        return "";
+    }
+
+    @Override
+    public Fragment createFragment() {
+        return new PluginDoubleElevenFragment();
+    }
+
+    @Override
+    public Fragment createFragment(Bundle bundle) {
+        return new PluginDoubleElevenFragment();
+    }
+
+
+    @Override
+    public String getPluginVersion() {
+        return "";
+    }
+
+    @Override
+    public String getPluginName() {
+        return "";
     }
 }
