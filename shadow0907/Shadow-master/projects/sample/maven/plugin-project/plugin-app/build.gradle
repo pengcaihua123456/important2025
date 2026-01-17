@@ -34,6 +34,12 @@ dependencies {
     //Shadow Transform后业务代码会有一部分实际引用runtime中的类
     //如果不以compileOnly方式依赖，会导致其他Transform或者Proguard找不到这些类
     pluginCompileOnly "com.tencent.shadow.core:runtime:$shadow_version"
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'  // 降级到1.2.0
+    implementation 'com.google.android.material:material:1.2.1'  // 降级到1.2.1
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'androidx.fragment:fragment:1.2.5'  // 降级到1.2.5
 }
 
 //这段buildscript配置的dependencies是为了apply plugin: 'com.tencent.shadow.plugin'能找到实现
