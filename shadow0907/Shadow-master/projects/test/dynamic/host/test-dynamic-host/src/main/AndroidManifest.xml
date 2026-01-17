@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tencent.shadow.test.dynamic.host">
+
+    <application
+        android:allowBackup="true"
+        android:label="Shadow Dyanamic测试宿主App"
+        android:name=".HostApplication"
+        android:theme="@android:style/Theme.DeviceDefault"
+        android:icon="@drawable/ic_launcher"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:authorities="${applicationId}.contentprovider.authority.dynamic"
+            android:name="com.tencent.shadow.core.runtime.container.PluginContainerContentProvider"
+            android:grantUriPermissions="true" />
+
+        <service android:name=".PluginProcessPPS" />
+        <service
+            android:name=".PluginServiceProcessPPS"
+            android:process=".plugin_service" />
+
+        <activity
+            android:name=".PluginLoadActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <activity android:name=".JumpToPluginActivity" />
+
+        <activity android:name=".BindPluginServiceActivity" />
+
+        <!--dynamic activity注册
+          注意configChanges需要全注册
+          theme需要注册成透明
+          -->
+        <activity
+            android:name="com.tencent.shadow.test.dynamic.runtime.container.PluginDefaultProxyActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize|layoutDirection"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name="com.tencent.shadow.test.dynamic.runtime.container.PluginSingleInstance1ProxyActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize|layoutDirection"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <activity
+            android:name="com.tencent.shadow.test.dynamic.runtime.container.PluginSingleTask1ProxyActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize|layoutDirection"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <!--dynamic activity注册 end -->
+    </application>
+
+</manifest>

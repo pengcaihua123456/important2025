@@ -1,0 +1,140 @@
+buildscript {
+    loadVersions:
+    {// 读取versions.properties到ext中，供项目中直接用变量引用版本号
+        def versions_properties_path = '../../../../buildScripts/gradle/versions.properties'
+        def versions = new Properties()
+        versions.load(file(versions_properties_path).newReader())
+        versions.forEach { key, stringValue ->
+            def value = stringValue?.isInteger() ? stringValue as Integer : stringValue
+            ext.set(key, value)
+        }
+    }
+    repositories {
+        if (!System.getenv().containsKey("DISABLE_TENCENT_MAVEN_MIRROR")) {
+            maven { url 'https://mirrors.tencent.com/nexus/repository/maven-public/' }
+        } else {
+            google()
+            mavenCentral()
+        }
+        mavenLocal()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$TestAGPVersion"
+        classpath "com.tencent.shadow.core:gradle-plugin:$ShadowVersion"
+    }
+}
+try {
+    plugins {
+        id 'com.android.application' version "$TestAGPVersion" apply true
+        id 'com.tencent.shadow.plugin' version "$ShadowVersion" apply true
+    }
+} catch (Exception ignored) {
+    apply plugin: 'com.android.application'
+    apply plugin: 'com.tencent.shadow.plugin'
+}
+
+allprojects {
+    repositories {
+        if (!System.getenv().containsKey("DISABLE_TENCENT_MAVEN_MIRROR")) {
+            maven { url 'https://mirrors.tencent.com/nexus/repository/maven-public/' }
+        } else {
+            google()
+            mavenCentral()
+        }
+    }
+}
+
+ext.disable_shadow_transform = true
+
+android {
+    try {
+        namespace 'app'
+    } catch (Exception ignored) {
+        // AGP 8之前找不到namespace这个方法的，不用设置。
+    }
+
+    compileSdkVersion COMPILE_SDK_VERSION
+
+    defaultConfig {
+        applicationId "com.tencent.shadow.test.gradle.stub_project"
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+    }
+
+    // 测试插件项目存在自定义flavorDimensions
+    flavorDimensions(*flavorDimensionList, 'DimensionA', 'DimensionB')
+    productFlavors {
+        A1 {
+            dimension 'DimensionA'
+        }
+        B2 {
+            dimension 'DimensionB'
+        }
+
+    }
+
+    // 将插件的资源ID分区改为和宿主0x7F不同的值
+    aaptOptions {
+        additionalParameters "--package-id", "0x7E", "--allow-reserved-package-id"
+    }
+}
+
+// 创建两个假的apk，用于验证打包流程（packagePlugin）
+afterEvaluate {
+    tasks.getByPath(":stub-project:assemblePluginA1B2Debug").doLast {
+        File loader = project.file("build/outputs/apk/plugina1b2debug/loader.apk")
+        File runtime = project.file("build/outputs/apk/plugina1b2debug/runtime.apk")
+        loader.parentFile.mkdirs()
+        loader.createNewFile()
+        runtime.createNewFile()
+    }
+}
+
+shadow {
+    packagePlugin {
+        pluginTypes {
+            A1B2Debug {
+                loaderApkConfig = new Tuple2('loader.apk', ':stub-project:assemblePluginA1B2Debug')
+                runtimeApkConfig = new Tuple2('runtime.apk', ':stub-project:assemblePluginA1B2Debug')
+                pluginApks {
+                    pluginApk1 {
+                        businessName = 'stub-project'
+                        partKey = 'stub-project'
+                        buildTask = ':stub-project:assemblePluginA1B2Debug'
+                        apkPath = 'stub-project/build/outputs/apk/pluginA1B2/debug/stub-project-plugin-A1-B2-debug.apk'
+                        dependsOn = ['Core', 'Base']
+                        hostWhiteList = ["androidx.test.espresso",
+                                         "com.tencent.shadow.test.lib.plugin_use_host_code_lib.interfaces"]
+                    }
+                }
+            }
+        }
+
+        loaderApkProjectPath = 'stub-project'
+
+        runtimeApkProjectPath = 'stub-project'
+
+        uuid = '1234567890'
+        version = 4
+        compactVersion = [1, 2, 3]
+        uuidNickName = "1.1.5"
+    }
+}
+
+dependencies {
+    //Shadow Transform后业务代码会有一部分实际引用runtime中的类
+    //如果不以compileOnly方式依赖，会导致其他Transform或者Proguard找不到这些类
+    pluginCompileOnly "com.tencent.shadow.core:runtime:$ShadowVersion"
+}
+
+repositories {
+    if (!System.getenv().containsKey("DISABLE_TENCENT_MAVEN_MIRROR")) {
+        maven { url 'https://mirrors.tencent.com/nexus/repository/maven-public/' }
+    } else {
+        google()
+        mavenCentral()
+    }
+    mavenLocal()
+}

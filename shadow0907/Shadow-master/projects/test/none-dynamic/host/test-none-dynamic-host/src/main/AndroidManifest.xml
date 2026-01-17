@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tencent.shadow.test.none_dynamic.host">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Shadow测试宿主App"
+        android:name=".HostApplication"
+        android:theme="@android:style/Theme.DeviceDefault"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".DefaultContainerActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize|layoutDirection" />
+
+        <activity
+            android:name=".SingleTaskContainerActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize|layoutDirection" />
+
+
+        <provider
+            android:name="com.tencent.shadow.core.runtime.container.PluginContainerContentProvider"
+            android:authorities="com.tencent.shadow.contentprovider.authority"
+            android:exported="true" />
+    </application>
+
+</manifest>
