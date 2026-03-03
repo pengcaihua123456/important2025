@@ -42,6 +42,8 @@ public class TaoduoduoMainActivity extends AppCompatActivity {
         // 初始化TabLayout
         tabLayout = findViewById(R.id.tab_layout);
 
+//        ManagerFactoryImpl managerFactory;
+
         // 设置Tab
         new TabLayoutMediator(tabLayout, viewPager,
                 new TabLayoutMediator.TabConfigurationStrategy() {

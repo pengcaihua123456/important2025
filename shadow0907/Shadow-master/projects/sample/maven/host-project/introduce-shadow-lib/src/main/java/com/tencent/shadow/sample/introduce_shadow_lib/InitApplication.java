@@ -8,9 +8,12 @@ import android.util.Log;
 import com.tencent.shadow.core.common.LoggerFactory;
 import com.tencent.shadow.dynamic.host.DynamicPluginManager;
 import com.tencent.shadow.dynamic.host.DynamicRuntime;
+import com.tencent.shadow.dynamic.host.ManagerFactory;
 import com.tencent.shadow.dynamic.host.PluginManager;
+import com.tencent.shadow.dynamic.host.PluginManagerImpl;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.concurrent.Future;
 
 import static android.os.Process.myPid;
@@ -56,7 +59,25 @@ public class InitApplication {
                     throw new RuntimeException("Sample程序不容错", e);
                 }
             }
+
+//            Class<?> factoryClass = classLoader.loadClass("com.tencent.shadow.dynamic.impl.ManagerFactoryImpl");
+//            ManagerFactory factory = (ManagerFactory) factoryClass.newInstance();
+//            PluginManagerImpl manager = factory.buildManager(context);
+
+
             sPluginManager = new DynamicPluginManager(fixedPathPmUpdater);
+
+
+            try {
+                Field field = DynamicPluginManager.class.getDeclaredField("mManager");
+                field.setAccessible(true);
+                PluginManagerImpl manager = (PluginManagerImpl) field.get(sPluginManager);
+
+                ClassLoader managerCL = manager.getClass().getClassLoader();
+                Log.d("CL", "Manager CL: " + managerCL);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -87,6 +87,16 @@ public class SamplePluginManager extends FastPluginManager {
                 try {
                     InstalledPlugin installedPlugin
                             = installPlugin(pluginZipPath, null, true);//这个调用是阻塞的
+
+
+
+                    // 假设你已安装插件并拿到 InstalledPlugin
+                    String uuid = installedPlugin.UUID;
+                    ClassLoader cl = getPluginClassLoader(uuid, "part1");
+                    Class<?> clazz = cl.loadClass("com.example.PluginUtils");
+                    Object obj = clazz.newInstance();
+
+
                     Intent pluginIntent = new Intent();
                     pluginIntent.setClassName(
                             context.getPackageName(),
