@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Shadow_-lite.iml" filepath="$PROJECT_DIR$/.idea/modules/Shadow_-lite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/Shadow_-lite.module_interface.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/Shadow_-lite.module_interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_plugin/Shadow_-lite.module_plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/module_plugin/Shadow_-lite.module_plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_plugin/Shadow_-lite.module_plugin.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_plugin/Shadow_-lite.module_plugin.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_plugin/Shadow_-lite.module_plugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_plugin/Shadow_-lite.module_plugin.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_plugin/Shadow_-lite.module_plugin.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_plugin/Shadow_-lite.module_plugin.unitTest.iml" />
+    </modules>
+  </component>
+</project>
