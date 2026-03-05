@@ -1,6 +1,7 @@
 package com.taoduoduo.host;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.taoduoduo.host.adapter.ViewPagerAdapter;
 import com.taoduoduo.shadow.R;
+import com.tencent.shadow.dynamic.host.EnterCallback;
+import com.tencent.shadow.dynamic.host.PluginManager;
+import com.tencent.shadow.sample.introduce_shadow_lib.InitApplication;
 
 public class TaoduoduoMainActivity extends AppCompatActivity {
 
@@ -24,6 +28,9 @@ public class TaoduoduoMainActivity extends AppCompatActivity {
             android.R.drawable.ic_menu_camera,
             android.R.drawable.ic_menu_my_calendar
     };
+
+    public static final int FROM_ID_START_ACTIVITY = 1001;
+    public static final int FROM_ID_CALL_SERVICE = 1002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,5 +61,27 @@ public class TaoduoduoMainActivity extends AppCompatActivity {
                     }
                 }
         ).attach();
+
+        jumpActivity();
+    }
+
+    private void jumpActivity() {
+        PluginManager pluginManager = InitApplication.getPluginManager();
+        pluginManager.enter(TaoduoduoMainActivity.this, FROM_ID_START_ACTIVITY, new Bundle(), new EnterCallback() {
+            @Override
+            public void onShowLoadingView(View view) {
+                TaoduoduoMainActivity.this.setContentView(view);//显示Manager传来的Loading页面
+            }
+
+            @Override
+            public void onCloseLoadingView() {
+
+            }
+
+            @Override
+            public void onEnterComplete() {
+
+            }
+        });
     }
 }

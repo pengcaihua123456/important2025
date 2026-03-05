@@ -7,6 +7,10 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ATaoDuoduoShadow.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/introduce-shadow-lib/ATaoDuoduoShadow.introduce-shadow-lib.iml" filepath="$PROJECT_DIR$/.idea/modules/introduce-shadow-lib/ATaoDuoduoShadow.introduce-shadow-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/introduce-shadow-lib/ATaoDuoduoShadow.introduce-shadow-lib.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/introduce-shadow-lib/ATaoDuoduoShadow.introduce-shadow-lib.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/introduce-shadow-lib/ATaoDuoduoShadow.introduce-shadow-lib.main.iml" filepath="$PROJECT_DIR$/.idea/modules/introduce-shadow-lib/ATaoDuoduoShadow.introduce-shadow-lib.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/introduce-shadow-lib/ATaoDuoduoShadow.introduce-shadow-lib.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/introduce-shadow-lib/ATaoDuoduoShadow.introduce-shadow-lib.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_common.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/ATaoDuoduoShadow.module_common.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_common/ATaoDuoduoShadow.module_common.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_common/ATaoDuoduoShadow.module_common.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_common/ATaoDuoduoShadow.module_common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_common/ATaoDuoduoShadow.module_common.main.iml" />
