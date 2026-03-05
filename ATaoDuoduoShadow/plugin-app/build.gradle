@@ -53,6 +53,9 @@ dependencies {
 
 
     implementation 'com.example:common:1.0.0'
+
+
+    implementation project(':module_common') // 直接引用本地模块
 }
 
 //这段buildscript配置的dependencies是为了apply plugin: 'com.tencent.shadow.plugin'能找到实现

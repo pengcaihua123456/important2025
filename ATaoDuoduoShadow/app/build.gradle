@@ -25,7 +25,7 @@ dependencies {
     })
 
     testCompile 'junit:junit:4.12'
-//    api project(':module_route') // 直接引用本地模块
+    implementation project(':module_common') // 直接引用本地模块
 
     implementation 'androidx.appcompat:appcompat:1.2.0'  // 降级到1.2.0
     implementation 'com.google.android.material:material:1.2.1'  // 降级到1.2.1

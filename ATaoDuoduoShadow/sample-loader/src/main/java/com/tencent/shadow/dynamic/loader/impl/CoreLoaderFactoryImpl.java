@@ -17,6 +17,8 @@ public class CoreLoaderFactoryImpl implements CoreLoaderFactory {
     @NotNull
     @Override
     public ShadowPluginLoader build(@NotNull Context context) {
-        return new SamplePluginLoader(context);
+        ShadowPluginLoader shadowPluginLoader = new SamplePluginLoader(context);
+//        shadowPluginLoader.getAllPluginPart();
+        return shadowPluginLoader;
     }
 }
