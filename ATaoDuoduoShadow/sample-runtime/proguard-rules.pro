@@ -20,9 +20,12 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# 保持 AIDL 接口不被混淆或移除
--keep class com.tencent.shadow.sample.plugin.IMyAidlInterface { *; }
--keep interface com.tencent.shadow.sample.plugin.IMyAidlInterface { *; }
+-keep class org.slf4j.**{*;}
+-dontwarn org.slf4j.impl.**
 
-# 如果 Shadow 框架有特定的保持规则，确保也加上
-# 通常 Shadow 样本项目中会有专门的 proguard 文件，检查是否遗漏了 include
+-keep class com.tencent.shadow.core.runtime.**{*;}
+#需要keep在宿主AndroidManifest.xml注册的壳子activity
+-keep class com.tencent.shadow.sample.runtime.**{*;}
+
+#GeneratedPluginContainerActivity包含新版本API的接口，可能在业务编译时使用的低版本compileSDK中找不到
+-dontwarn com.tencent.shadow.core.runtime.container.GeneratedPluginContainerActivity
