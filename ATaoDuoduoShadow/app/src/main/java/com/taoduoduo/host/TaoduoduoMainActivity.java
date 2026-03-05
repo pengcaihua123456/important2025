@@ -1,5 +1,6 @@
 package com.taoduoduo.host;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,10 +11,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.taoduoduo.host.adapter.ViewPagerAdapter;
-import com.taoduoduo.shadow.R;
-import com.tencent.shadow.dynamic.host.EnterCallback;
-import com.tencent.shadow.dynamic.host.PluginManager;
-import com.tencent.shadow.sample.introduce_shadow_lib.InitApplication;
+import com.tencent.shadow.sample.host.R;
+
 
 public class TaoduoduoMainActivity extends AppCompatActivity {
 
@@ -65,23 +64,18 @@ public class TaoduoduoMainActivity extends AppCompatActivity {
         jumpActivity();
     }
 
+    /**
+     * TaoduoduoMainActivity跳转到MainActivity
+     */
     private void jumpActivity() {
-        PluginManager pluginManager = InitApplication.getPluginManager();
-        pluginManager.enter(TaoduoduoMainActivity.this, FROM_ID_START_ACTIVITY, new Bundle(), new EnterCallback() {
-            @Override
-            public void onShowLoadingView(View view) {
-                TaoduoduoMainActivity.this.setContentView(view);//显示Manager传来的Loading页面
-            }
-
-            @Override
-            public void onCloseLoadingView() {
-
-            }
-
-            @Override
-            public void onEnterComplete() {
-
-            }
-        });
+        Intent intent = new Intent(TaoduoduoMainActivity.this, MainActivity.class);
+        // 可选：添加过渡动画
+        startActivity(intent);
+        // 可选：添加进入退出动画
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        // 可选：关闭当前Activity
+        // finish();
     }
+
+
 }

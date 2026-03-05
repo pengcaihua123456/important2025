@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.taoduoduo.shadow.R;
+import com.tencent.shadow.sample.host.R;
 
 
 public class CategoryFragment extends Fragment {

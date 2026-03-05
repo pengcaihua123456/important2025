@@ -10,7 +10,7 @@
         android:id="@+id/tv_plugin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="这是插件"
+        android:text="这是插件-2026年"
         android:textSize="18sp"
         android:layout_margin="16dp"/>
 
