@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/module_common" />
             <option value="$PROJECT_DIR$/plugin-app" />
             <option value="$PROJECT_DIR$/sample-loader" />
+            <option value="$PROJECT_DIR$/sample-manager" />
             <option value="$PROJECT_DIR$/sample-runtime" />
           </set>
         </option>
