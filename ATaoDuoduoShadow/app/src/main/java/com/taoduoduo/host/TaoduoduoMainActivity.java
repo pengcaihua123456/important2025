@@ -68,14 +68,12 @@ public class TaoduoduoMainActivity extends AppCompatActivity {
      * TaoduoduoMainActivity跳转到MainActivity
      */
     private void jumpActivity() {
-        Intent intent = new Intent(TaoduoduoMainActivity.this, MainActivity.class);
-        // 可选：添加过渡动画
-        startActivity(intent);
-        // 可选：添加进入退出动画
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        // 可选：关闭当前Activity
-        // finish();
+//        Intent intent = new Intent(TaoduoduoMainActivity.this, MainActivity.class);
+//        // 可选：添加过渡动画
+//        startActivity(intent);
+//        // 可选：添加进入退出动画
+//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//        // 可选：关闭当前Activity
+//        // finish();
     }
-
-
 }
