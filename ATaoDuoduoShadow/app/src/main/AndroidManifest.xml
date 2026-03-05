@@ -18,7 +18,10 @@
         </activity>
 
 
-        <activity android:name="com.taoduoduo.host.MainActivity"></activity>
+        <activity android:name="com.taoduoduo.host.HomeActivity"></activity>
+
+
+        <activity android:name="com.taoduoduo.host.CategoryDetailActivity"></activity>
 
     </application>
 

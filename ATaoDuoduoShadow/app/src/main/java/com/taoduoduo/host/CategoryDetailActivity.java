@@ -12,7 +12,7 @@ import com.tencent.shadow.dynamic.host.EnterCallback;
 import com.tencent.shadow.dynamic.host.PluginManager;
 import com.tencent.shadow.sample.introduce_shadow_lib.InitApplication;
 
-public class MainActivity extends Activity {
+public class CategoryDetailActivity extends Activity {
 
     public static final int FROM_ID_START_ACTIVITY = 1001;
     public static final int FROM_ID_CALL_SERVICE = 1002;
@@ -37,15 +37,15 @@ public class MainActivity extends Activity {
                 v.setEnabled(false);//防止点击重入
 
                 PluginManager pluginManager = InitApplication.getPluginManager();
-                pluginManager.enter(MainActivity.this, FROM_ID_START_ACTIVITY, new Bundle(), new EnterCallback() {
+                pluginManager.enter(CategoryDetailActivity.this, FROM_ID_START_ACTIVITY, new Bundle(), new EnterCallback() {
                     @Override
                     public void onShowLoadingView(View view) {
-                        MainActivity.this.setContentView(view);//显示Manager传来的Loading页面
+                        CategoryDetailActivity.this.setContentView(view);//显示Manager传来的Loading页面
                     }
 
                     @Override
                     public void onCloseLoadingView() {
-                        MainActivity.this.setContentView(linearLayout);
+                        CategoryDetailActivity.this.setContentView(linearLayout);
                     }
 
                     @Override
@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
                 v.setEnabled(false);//防止点击重入
 
                 PluginManager pluginManager = InitApplication.getPluginManager();
-                pluginManager.enter(MainActivity.this, FROM_ID_CALL_SERVICE, null, null);
+                pluginManager.enter(CategoryDetailActivity.this, FROM_ID_CALL_SERVICE, null, null);
             }
         });
 

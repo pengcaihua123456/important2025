@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.taoduoduo.host.MainActivity;
+import com.taoduoduo.host.CategoryDetailActivity;
 import com.tencent.shadow.sample.host.R;
 
 
@@ -30,7 +30,7 @@ public class CategoryFragment extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                Intent intent = new Intent(getActivity(), CategoryDetailActivity.class);
                 startActivity(intent);
             }
         });
