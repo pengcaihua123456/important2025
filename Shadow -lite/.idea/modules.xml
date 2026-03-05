@@ -7,7 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Shadow_-lite.app.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_route/Shadow_-lite.module_interface.iml" filepath="$PROJECT_DIR$/.idea/modules/module_route/Shadow_-lite.module_interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.iml" filepath="$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.main.iml" filepath="$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/module_interface/Shadow_-lite.module_interface.unitTest.iml" />
