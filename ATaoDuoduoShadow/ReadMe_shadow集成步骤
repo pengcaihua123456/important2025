@@ -263,6 +263,9 @@ day1: 把项目搭建好！(ok)
 day2: 把基本的4个table，fragment创建 (ok)
 day3: 集成shadow，分类，购物车，我的是单独的插件 (ok)
 day4: 添加双11的插件: activity,fragment (ok)
-day5: 双11插件和购物车插件的通信  
+day5: 双11插件和购物车插件的通信
 day6： 卸载插件
 day7： 版本管理和全量的热修复
+
+
+git push origin main

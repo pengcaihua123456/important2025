@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
+import com.tencent.shadow.common.IHostService;
 import com.tencent.shadow.common.IPluginInfoProvider;
 import com.tencent.shadow.sample.plugin.PluginDoubleElevenFragment;
 
@@ -47,5 +48,10 @@ public class PluginInfoProviderImpl implements IPluginInfoProvider {
     public Fragment getFragment() {
         Log.d(TAG,"getFragment");
         return new PluginDoubleElevenFragment();
+    }
+
+    @Override
+    public void setHostService(IHostService service) {
+
     }
 }

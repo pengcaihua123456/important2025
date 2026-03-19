@@ -15,5 +15,7 @@ public interface IPluginInfoProvider {
     Bundle getPluginData(String key);
 
     Fragment getFragment();
+
+    void setHostService(IHostService service);
 }
 

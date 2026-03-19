@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.taoduoduo.host.core.PluginToHostDataService;
 import com.tencent.shadow.sample.host.R;
 
 
@@ -23,6 +24,19 @@ public class CartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
         TextView textView = view.findViewById(R.id.text_cart);
         textView.setText("购物车\n\n目前有 3 件商品\n\n1. 智能手机 ×1\n2. 运动鞋 ×2\n\n总金额：¥ 599.00\n\n点击去结算");
+        // 设置点击事件
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // 宿主中获取插件的方法
+                ClassLoader classLoader=  null;
+                String getPluginProviderString = PluginToHostDataService.getPluginName(classLoader);
+
+            }
+        });
+
+
         return view;
     }
 }
