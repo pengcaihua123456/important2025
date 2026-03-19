@@ -1,6 +1,5 @@
 package com.tencent.shadow.common;
 
-import android.content.Context;
 
 /**
  * 宿主向插件暴露的能力接口
