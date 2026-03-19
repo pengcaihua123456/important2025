@@ -1,4 +1,4 @@
-package com.taoduoduo.host.core.imp;
+package com.tencent.shadow.sample.introduce_shadow_lib.core.imp;
 
 
 import com.tencent.shadow.common.IHostService;

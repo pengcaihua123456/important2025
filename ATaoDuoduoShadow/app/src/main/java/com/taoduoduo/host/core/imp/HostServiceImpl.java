@@ -1,7 +1,6 @@
 package com.taoduoduo.host.core.imp;
 
 
-import android.content.Context;
 import com.tencent.shadow.common.IHostService;
 
 public class HostServiceImpl implements IHostService {

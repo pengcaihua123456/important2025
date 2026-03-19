@@ -1,7 +1,9 @@
-package com.taoduoduo.host.core;
+package com.tencent.shadow.sample.introduce_shadow_lib.core;
 
 import android.util.Log;
+
 import androidx.fragment.app.Fragment;
+
 import com.tencent.shadow.common.IPluginInfoProvider;
 
 /**

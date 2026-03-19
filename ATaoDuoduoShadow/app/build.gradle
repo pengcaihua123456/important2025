@@ -29,13 +29,13 @@ dependencies {
     // 将 testCompile 改为 testImplementation
     testImplementation 'junit:junit:4.12'
 
-    implementation project(':module_common')
+
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.fragment:fragment:1.2.5'
-    implementation project(':introduce-shadow-lib')
+    api project(':introduce-shadow-lib')
     implementation "com.tencent.shadow.dynamic:host:$shadow_version"
 }
 

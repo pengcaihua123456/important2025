@@ -10,8 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.taoduoduo.host.core.PluginToHostDataService;
+
 import com.tencent.shadow.sample.host.R;
+import com.tencent.shadow.sample.introduce_shadow_lib.core.PluginToHostDataService;
 
 
 public class CartFragment extends Fragment {
