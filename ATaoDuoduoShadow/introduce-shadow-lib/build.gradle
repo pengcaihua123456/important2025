@@ -22,5 +22,5 @@ android {
 
 dependencies {
     implementation "com.tencent.shadow.dynamic:host:$shadow_version"
-    api project(':module_common')
+    api project(':shadow_common')
 }

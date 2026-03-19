@@ -1,5 +1,5 @@
 include ':app'
-include ':module_common'
+include ':shadow_common'
 include ':introduce-shadow-lib'
 include ':plugin-app'
 include ':sample-runtime'

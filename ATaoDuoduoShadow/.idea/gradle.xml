@@ -12,11 +12,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/introduce-shadow-lib" />
-            <option value="$PROJECT_DIR$/module_common" />
             <option value="$PROJECT_DIR$/plugin-app" />
             <option value="$PROJECT_DIR$/sample-loader" />
             <option value="$PROJECT_DIR$/sample-manager" />
             <option value="$PROJECT_DIR$/sample-runtime" />
+            <option value="$PROJECT_DIR$/shadow_common" />
           </set>
         </option>
       </GradleProjectSettings>
