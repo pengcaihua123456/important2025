@@ -13,7 +13,7 @@ import com.evenbus.myapplication.leak.oom.OomDestoryImageActivity;
 import com.evenbus.myapplication.leak.oom.OomOriginImageActivity;
 import com.evenbus.myapplication.leak.oom.OomQueueImageActivity;
 import com.evenbus.myapplication.leak.oom.OomRecyclerActivity;
-import com.evenbus.myapplication.leak.videoleak.CoverVideoPlayerView;
+import com.evenbus.myapplication.leak.videoleak.VideoPlayerActivity;
 import com.example.modulebufferknifeantotations.BindView;
 import com.example.modulebufferknifeantotations.OnClick;
 
@@ -60,7 +60,7 @@ public class OomActivity extends AppCompatActivity {
         tv_memory.setText("没有压缩");
         tv_asm.setText("存储太大OOM");
         tv_view.setText("Recycle OOM");
-        tv_compler.setText("内存泄露");
+        tv_compler.setText("内存泄露-自定义view");
 
         tv_bigdata.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +139,7 @@ public class OomActivity extends AppCompatActivity {
 
     private void coverVidePlay(){
         // 在按钮点击或其他事件中
-        Intent intent = new Intent(OomActivity.this, CoverVideoPlayerView.class);
+        Intent intent = new Intent(OomActivity.this, VideoPlayerActivity.class);
         startActivity(intent);
     }
 

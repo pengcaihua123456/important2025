@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.module_memory.R;
 
 
+/***
+ * 自定义view内存泄露
+ */
 // VideoPlayerActivity.java
 public class VideoPlayerActivity extends AppCompatActivity {
     private CoverVideoPlayerView videoPlayer;
