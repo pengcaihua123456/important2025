@@ -39,7 +39,7 @@ public class OomQueueImageActivity extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"onClick");
+                Log.d(TAG,"onClick 添加图片");
                 Bitmap bitmap2 = decodeSampledBitmapFromResource(getResources(), R.mipmap.smart, 1000, 1000);
                 Bitmap bitmap3 = decodeSampledBitmapFromResource(getResources(), R.mipmap.big, 1000, 1000);
                 Bitmap bitmap4= decodeSampledBitmapFromResource(getResources(), R.mipmap.biga, 1000, 1000);
@@ -51,7 +51,7 @@ public class OomQueueImageActivity extends AppCompatActivity {
 
         });
     }
-    private static final List<Bitmap> sImageCache = new ArrayList<>();
+    private static  List<Bitmap> sImageCache = new ArrayList<>();
     private void putPhotoCache(Bitmap bitmap) {
         // 错误2：加入静态缓存
         sImageCache.add(bitmap);
@@ -95,4 +95,23 @@ public class OomQueueImageActivity extends AppCompatActivity {
         return inSampleSize;
     }
 
+
+    /****
+     * 正确的做法，不要持有bitmap
+     */
+    /***
+     * 执行多次点击（比如 10 次）
+     *
+     * 观察内存曲线持续上升，不会下降
+     *
+     * 执行一次 GC（点击 Profiler 中的垃圾桶图标）
+     *
+     * 观察内存并没有明显回落，因为静态 List 仍然持有所有 Bitmap
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sImageCache.clear();
+        sImageCache=null;
+    }
 }

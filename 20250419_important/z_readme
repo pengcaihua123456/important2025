@@ -6,7 +6,7 @@ https://juejin.cn/post/7525320525074792489
 性能优化
 1.性能优化_卡顿优化
 2.性能优化_基于Matrix字节码插桩ASM   moduleMatrixAsm
-3.性能优化_内存优KOOM（profile,MAT,leakcanary,KOOM实战分析）
+3.性能优化_内存优KOOM（profile,MAT,leakcanary,KOOM实战分析）moduledMemory模块
 内存泄露
 内存溢出
 4.动画_自定义view，高级滑动,动画   moduleView
@@ -25,3 +25,5 @@ https://github.com/pengcaihua123456/important2025/tree/main/20250419_important
 提交指令:
 git push origin main
 ------------------------每个模块的思维导图----------------------
+
+KOOM没有集成到demo中，需要集成！------20260416

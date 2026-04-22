@@ -28,7 +28,7 @@ import java.util.Locale;
 public class OomBigDataActivity extends AppCompatActivity {
 
         private static final String TAG = "VideoStreamDemo";
-        private static final int VIDEO_SIZE_MB = 200;
+        private static final int VIDEO_SIZE_MB = 220; // 500m会内存溢出，用300M
         private static final int VIDEO_SIZE_BYTES = VIDEO_SIZE_MB * 1024 * 1024;
         private static final int CHUNK_SIZE = 2 * 1024 * 1024; // 2MB分块
 

@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.evenbus.myapplication.leak.DefaultInitTask;
+import com.evenbus.myapplication.leak.KOOMConfig;
 import com.evenbus.myapplication.leak.LeakThreadActivity;
 import com.evenbus.myapplication.leak.oom.OomBigDataActivity;
 import com.evenbus.myapplication.leak.oom.OomDestoryImageActivity;
@@ -37,6 +39,7 @@ public class OomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        new KOOMConfig().init(DefaultInitTask.mApplication);
     }
 
     @OnClick(R.id.tv_compler)
@@ -56,9 +59,9 @@ public class OomActivity extends AppCompatActivity {
 
 
         tv_arount.setText("线程泄露");
-        tv_trace.setText("没有销毁");
-        tv_memory.setText("没有压缩");
-        tv_asm.setText("存储太大OOM");
+        tv_trace.setText("图片没有销毁");
+        tv_memory.setText("没有压缩,加载超大图片");
+        tv_asm.setText("小对象堆积内存");
         tv_view.setText("Recycle OOM");
         tv_compler.setText("内存泄露-自定义view");
 

@@ -45,6 +45,11 @@ android {
         }
     }
 
+    packagingOptions {
+        // 解决 shark.kotlin_module 文件重复的冲突
+        pickFirst 'META-INF/shark.kotlin_module'
+    }
+
 }
 
 gradle.projectsEvaluated {

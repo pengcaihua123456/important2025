@@ -73,6 +73,7 @@ public class OomOriginImageActivity extends AppCompatActivity {
 
             // 3. 保存强引用（故意不释放内存）
             bitmapHolder.add(bitmap);
+            // bitmapHolder.add(bitmap1); // 只是添加引用，不复制像素数据
             // 更新UI显示最新图片
             runOnUiThread(() -> mPhotoView.setImageBitmap(bitmap));
 
