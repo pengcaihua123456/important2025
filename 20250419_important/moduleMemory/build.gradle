@@ -42,11 +42,11 @@ dependencies {
 //    implementation 'com.kuaishou.koom:koom-monitor-base:2.2.0'
 
     // Java堆内存泄漏监控（推荐）
-    implementation 'com.kuaishou.koom:koom-java-leak-static:2.2.0'
+    api 'com.kuaishou.koom:koom-java-leak-static:2.2.0'
 
     // Native堆内存泄漏监控（可选，API 24+）
-    implementation 'com.kuaishou.koom:koom-native-leak-static:2.2.0'
+    api 'com.kuaishou.koom:koom-native-leak-static:2.2.0'
 
     // 线程泄漏监控（可选，API 24+）
-    implementation 'com.kuaishou.koom:koom-thread-leak-static:2.2.0'
+    api 'com.kuaishou.koom:koom-thread-leak-static:2.2.0'
 }
