@@ -25,6 +25,19 @@ import java.util.Locale;
 /***
  * 加载抖音大视频导致的OOM
  */
+
+
+/***
+ * 有几个对象，但是有的不一定是有问题，要看大小
+ *
+ * Primitive Array Size Over Threshold翻译：基本数据类型数组大小超过阈值 → 一次性申请了超大内存，系统直接拒绝分配，应用崩溃。
+ *
+ * 泄漏 / 超大对象
+ * int[]：455KB
+ * long[]：8MB
+ * byte[]：230MB（这是核心元凶）
+ * {"classInfos":[{"className":"libcore.util.NativeAllocationRegistry$CleanerThunk","instanceCount":"926"},{"className":"com.android.internal.policy.PhoneWindow","instanceCount":"3"},{"className":"libcore.util.NativeAllocationRegistry","instanceCount":"113"},{"className":"com.evenbus.myapplication.OomActivity","instanceCount":"1"},{"className":"com.evenbus.myapplication.MainActivity","instanceCount":"1"}],"gcPaths":[{"gcRoot":"System class","instanceCount":1,"leakReason":"Primitive Array Size Over Threshold, 455869","path":[{"declaredClass":"android.icu.impl.coll.CollationRoot","reference":"android.icu.impl.coll.CollationRoot.rootSingleton","referenceType":"STATIC_FIELD"},{"declaredClass":"android.icu.impl.coll.CollationTailoring","reference":"android.icu.impl.coll.CollationTailoring.trie","referenceType":"INSTANCE_FIELD"},{"declaredClass":"android.icu.impl.Trie2","reference":"android.icu.impl.Trie2_32.data32","referenceType":"INSTANCE_FIELD"},{"reference":"int[]","referenceType":"array"}],"signature":"72c7b40fff431b6442d8de34a1f395379db13b9"}],"leakObjects":[{"className":"int[]","objectId":"1967476736","size":"455869"},{"className":"long[]","objectId":"1968394240","size":"8000013"},{"className":"byte[]","objectId":"1976397824","size":"230686733"}],"runningInfo":{"buildModel":"M2010J19SC","currentPage":"leak.oom.OomBigDataActivity","deviceMemAvaliable":"3500.1094","deviceMemTotal":"5706.3438","dumpReason":"reanalysis","fdCount":"130","filterInstanceTime":"3.253","findGCPathTime":"28.406","jvmMax":"256.0","jvmUsed":"12.159271","manufacture":"Xiaomi","nowTime":"2026-04-23_20-53-01_004","pss":"105.50781mb","rss":"154.26953mb","sdkInt":"31","threadCount":"28","usageSeconds":"5","vss":"6377.0195mb"}}
+ */
 public class OomBigDataActivity extends AppCompatActivity {
 
         private static final String TAG = "VideoStreamDemo";

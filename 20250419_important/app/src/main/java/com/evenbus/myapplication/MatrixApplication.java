@@ -22,6 +22,8 @@ public class MatrixApplication extends Application {
         // 2. 再初始化 OOMMonitorInitTask
         OOMMonitorInitTask.getInstance().init(this);
 
+//        new KOOMConfig().init(this);
+
 
 //        new MatrixUtil().init(this);
 

@@ -26,6 +26,8 @@ import kotlin.jvm.functions.Function0;
  * 如果设置比较大，就是有问题的
  *
  * OOMMonitorInitTask 中把监控阈值设置得很低（60% 就报警，正常是 80% 才报警
+ *
+ * 图片内存是通过nativie,还是java ,怎么让图片触发报告！ 或者说bitmap这种不是泄露，有些！
  */
 public class OOMMonitorInitTask implements InitTask {
 
@@ -95,7 +97,7 @@ public class OOMMonitorInitTask implements InitTask {
                     // ========== 测试配置（低阈值，容易触发）==========
                     .setThreadThreshold(50)                    // 线程阈值
                     .setFdThreshold(300)                       // 文件描述符阈值
-                    .setHeapThreshold(30f)                    // 【测试】堆内存阈值 30%，正常是 0.8
+                    .setHeapThreshold(0.7f)                    // 【测试】堆内存阈值 30%，正常是 0.8
                     .setVssSizeThreshold(1_000_000)            // VSS 阈值
                     .setMaxOverThresholdCount(1)               // 【测试】超过阈值 1 次就触发，正常是 3
                     .setLoopInterval(5000L)                    // 【测试】每 5 秒检测一次，正常是 30 秒

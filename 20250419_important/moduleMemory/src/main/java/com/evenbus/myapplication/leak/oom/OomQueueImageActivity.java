@@ -40,36 +40,66 @@ public class OomQueueImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG,"onClick 添加图片");
-                Bitmap bitmap2 = decodeSampledBitmapFromResource(getResources(), R.mipmap.smart, 1000, 1000);
-                Bitmap bitmap3 = decodeSampledBitmapFromResource(getResources(), R.mipmap.big, 1000, 1000);
-                Bitmap bitmap4= decodeSampledBitmapFromResource(getResources(), R.mipmap.biga, 1000, 1000);
+                // 循环 10 次，批量加载大图 → 快速占满内存
+                // 开启子线程，循环加载 10 轮 3 张大图
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 循环 10 次
+                        for (int i = 0; i < 10; i++) {
+                            Bitmap bitmap2 = decodeSampledBitmapFromResource(getResources(), R.mipmap.smart, 1000, 1000);
+                            Bitmap bitmap3 = decodeSampledBitmapFromResource(getResources(), R.mipmap.big, 1000, 1000);
+                            Bitmap bitmap4 = decodeSampledBitmapFromResource(getResources(), R.mipmap.biga, 1000, 1000);
 
-                putPhotoCache(bitmap2);
-                putPhotoCache(bitmap3);
-                putPhotoCache(bitmap4);
+//                            putPhotoCache(bitmap2);
+//                            putPhotoCache(bitmap3);
+//                            putPhotoCache(bitmap4);
+
+                            // 点击时
+                            for (int j = 0; j < 5; j++) {
+                                // 每次申请 1MB Java 内存
+                                byte[] array = new byte[1024 * 1024];
+                                sJavaHeapCache.add(array);
+                            }
+                        }
+                    }
+                }).start();
             }
 
         });
     }
-    private static  List<Bitmap> sImageCache = new ArrayList<>();
+
     private void putPhotoCache(Bitmap bitmap) {
         // 错误2：加入静态缓存
         sImageCache.add(bitmap);
     }
 
+    /**
+     * native内存
+     */
+    private static  List<Bitmap> sImageCache = new ArrayList<>();
+
+    /**
+     * java内存
+     */
+    private static List<byte[]> sJavaHeapCache = new ArrayList<>();
+
+
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
-
         // 第一次解析将inJustDecodeBounds设置为true，获取图片尺寸
         final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // 计算inSampleSize值
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // 使用获取到的inSampleSize值再次解析图片
-        options.inJustDecodeBounds = false;
+        boolean isOriginal=true;
+        if(isOriginal){
+            options.inSampleSize = 1; // 不压缩
+        }else{
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeResource(res, resId, options);
+            // 计算inSampleSize值
+            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+            // 使用获取到的inSampleSize值再次解析图片
+            options.inJustDecodeBounds = false;
+        }
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
@@ -111,7 +141,7 @@ public class OomQueueImageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sImageCache.clear();
-        sImageCache=null;
+//        sImageCache.clear();
+//        sImageCache=null;
     }
 }

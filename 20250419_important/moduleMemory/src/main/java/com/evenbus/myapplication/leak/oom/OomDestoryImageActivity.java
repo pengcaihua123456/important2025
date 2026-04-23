@@ -103,7 +103,6 @@ public class OomDestoryImageActivity extends AppCompatActivity {
 
         // 1. 取消任何正在进行的异步任务
         cancelPendingTask();
-
         // 2. 移除视图监听器
         mPhotoView.removeOnAttachStateChangeListener(attachListener);
 
