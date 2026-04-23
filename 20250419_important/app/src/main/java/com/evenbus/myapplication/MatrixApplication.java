@@ -3,8 +3,7 @@ package com.evenbus.myapplication;
 import android.app.Application;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.evenbus.myapplication.leak.DefaultInitTask;
-import com.evenbus.myapplication.leak.OOMMonitorInitTask;
+import com.evenbus.myapplication.leak.KOOMConfig;
 
 public class MatrixApplication extends Application {
 
@@ -17,12 +16,12 @@ public class MatrixApplication extends Application {
         ARouter.init(this);
 
 
-        // 1. 先初始化 DefaultInitTask
-        DefaultInitTask.init(this);
-        // 2. 再初始化 OOMMonitorInitTask
-        OOMMonitorInitTask.getInstance().init(this);
+//        // 1. 先初始化 DefaultInitTask
+//        DefaultInitTask.init(this);
+//        // 2. 再初始化 OOMMonitorInitTask
+//        OOMMonitorInitTask.getInstance().init(this);
 
-//        new KOOMConfig().init(this);
+        new KOOMConfig().init(this);
 
 
 //        new MatrixUtil().init(this);

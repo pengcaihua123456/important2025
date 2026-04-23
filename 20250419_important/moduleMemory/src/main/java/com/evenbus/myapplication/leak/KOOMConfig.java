@@ -43,7 +43,7 @@ public class KOOMConfig {
     // ========== Native 监控配置 ==========
     private static final long NATIVE_LOOP_INTERVAL = 5000L;
     private static final int NATIVE_MONITOR_THRESHOLD = 16;
-    private static final long NATIVE_HEAP_THRESHOLD = 10 * 1024 * 1024;
+    private static final long NATIVE_HEAP_THRESHOLD = 1 * 1024 * 1024;
 
     private Application application;
 

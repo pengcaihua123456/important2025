@@ -4,10 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,45 +13,84 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.module_memory.R;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 图片没有销毁OOM
+ *
+ * Native泄露，没有达到
+ * 图片被 Activity 持有且没有释放导致 OOM 的 Demo
+ *
+ * 泄漏原因：
+ * 1. Activity 的实例变量（mBitmapList）持有所有加载的 Bitmap
+ * 2. onDestroy 中不清空列表，导致 Activity 无法被 GC
+ * 3. 旧 Bitmap 没有回收
  */
 public class OomDestoryImageActivity extends AppCompatActivity {
 
+    private static final String TAG = "OomDestoryImageActivity";
+
     private ImageView mPhotoView;
     private TextView textView;
-    private Bitmap currentBitmap;
+    private TextView tvCount;
+
+    // 🔴 泄漏点1：Activity 的实例变量持有所有 Bitmap
+    // Activity 销毁时，如果不清空，所有 Bitmap 都无法释放
+    private List<Bitmap> mBitmapList = new ArrayList<>();
+
     private LoadImageTask loadImageTask;
-
-    private final View.OnAttachStateChangeListener attachListener =
-            new View.OnAttachStateChangeListener() {
-                @Override
-                public void onViewAttachedToWindow(View v) {
-                    Log.d("OomDestoryImageActivity", "onViewAttachedToWindow");
-                }
-
-                @Override
-                public void onViewDetachedFromWindow(View v) {
-                    Log.d("OomDestoryImageActivity", "onViewDetachedFromWindow");
-                }
-            };
+    private int loadCount = 0;
+    private int totalCount = 30;  // 总共加载30次
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mat_photo);
+
         mPhotoView = findViewById(R.id.photo_view);
         textView = findViewById(R.id.tv_click);
+//        tvCount = findViewById(R.id.tv_count);
 
-        // 添加状态变化监听器
-        mPhotoView.addOnAttachStateChangeListener(attachListener);
+        // 显示加载进度
+        updateCountDisplay();
 
-        // 设置点击事件
-        textView.setOnClickListener(v -> loadImage());
+        // 设置点击事件 - 点击后开始循环加载
+        textView.setOnClickListener(v -> startLoadImages());
     }
 
-    private void loadImage() {
+    private void updateCountDisplay() {
+        if (tvCount != null) {
+            tvCount.setText("已加载: " + loadCount + " / " + totalCount +
+                    "\n缓存Bitmap数: " + mBitmapList.size());
+        }
+    }
+
+    private void startLoadImages() {
+        // 禁用按钮，防止重复点击
+        textView.setEnabled(false);
+        textView.setText("加载中...");
+
+        // 重置计数
+        loadCount = 0;
+        updateCountDisplay();
+
+        // 开始循环加载
+        loadNextImage();
+    }
+
+    private void loadNextImage() {
+        if (loadCount >= totalCount) {
+            // 加载完成
+            textView.setEnabled(true);
+            textView.setText("加载完成，共 " + totalCount + " 次\n缓存Bitmap数: " + mBitmapList.size());
+            Log.d(TAG, "所有图片加载完成，共 " + totalCount + " 次，当前持有Bitmap数量: " + mBitmapList.size());
+            return;
+        }
+
+        loadCount++;
+        updateCountDisplay();
+        Log.d(TAG, "开始加载第 " + loadCount + " 张图片");
+
         // 取消任何正在进行的任务
         cancelPendingTask();
 
@@ -62,32 +99,30 @@ public class OomDestoryImageActivity extends AppCompatActivity {
         loadImageTask.execute();
     }
 
-    private void setNewBitmap(Bitmap newBitmap) {
-        if (newBitmap == null) return;
-
-        // 保存旧位图引用
-        Bitmap oldBitmap = currentBitmap;
-
-        // 更新当前位图和视图
-        currentBitmap = newBitmap;
-        mPhotoView.setImageBitmap(newBitmap);
-
-        // 安全回收旧位图
-        safeRecycleBitmap(oldBitmap);
-    }
-
-    private void safeRecycleBitmap(Bitmap bitmap) {
-        if (bitmap == null || bitmap.isRecycled()) return;
-
-        // Android 8.0+ 的硬件位图无需手动回收
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (bitmap.getConfig() == Bitmap.Config.HARDWARE) {
-                return;
-            }
+    private void addBitmap(Bitmap newBitmap) {
+        if (newBitmap == null) {
+            // 加载失败，继续下一张
+            loadNextImage();
+            return;
         }
 
-        // 回收非硬件位图
-        bitmap.recycle();
+        // 🔴 泄漏点2：将 Bitmap 添加到 Activity 持有的列表中
+        // 从不移除，导致列表越来越大
+        mBitmapList.add(newBitmap);
+
+        long totalMemory = 0;
+        for (Bitmap bmp : mBitmapList) {
+            totalMemory += bmp.getByteCount();
+        }
+        Log.d(TAG, "添加 Bitmap 到列表，当前数量: " + mBitmapList.size() +
+                ", 总内存约: " + (totalMemory / 1024 / 1024) + "MB");
+
+        // 更新 ImageView 显示最新的一张
+        mPhotoView.setImageBitmap(newBitmap);
+        updateCountDisplay();
+
+        // 继续加载下一张
+        loadNextImage();
     }
 
     private void cancelPendingTask() {
@@ -101,68 +136,98 @@ public class OomDestoryImageActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        // 1. 取消任何正在进行的异步任务
-        cancelPendingTask();
-        // 2. 移除视图监听器
-        mPhotoView.removeOnAttachStateChangeListener(attachListener);
+        Log.d(TAG, "onDestroy, 当前 Activity 持有 " + mBitmapList.size() + " 张 Bitmap");
 
+        // 🔴 泄漏点3：注释掉了清理逻辑，Bitmap 列表没有被清空
+        // Activity 虽然销毁了，但 mBitmapList 中的 Bitmap 仍然被这个 Activity 实例持有
+        // 由于 Activity 实例本身无法被 GC，所有 Bitmap 也无法释放
+
+        // 正确的做法应该是：
+        // for (Bitmap bmp : mBitmapList) {
+        //     if (bmp != null && !bmp.isRecycled()) {
+        //         bmp.recycle();
+        //     }
+        // }
+        // mBitmapList.clear();
+        // cancelPendingTask();
     }
 
+    /**
+     * AsyncTask 是内部类，隐式持有外部 Activity 引用
+     * 如果任务在 Activity 销毁后仍在运行，会导致 Activity 无法被 GC
+     */
     private class LoadImageTask extends AsyncTask<Void, Void, Bitmap> {
+
         @Override
         protected Bitmap doInBackground(Void... params) {
-            // 检查是否已取消
             if (isCancelled()) return null;
 
             try {
-                // 在后台线程解码图片
+                // 加载原图，不压缩，最大化内存占用
                 return decodeSampledBitmapFromResource(
-                        getResources(), R.mipmap.smart, 200, 200);
+                        getResources(), R.mipmap.smart, 6000, 6000);
             } catch (Exception e) {
-                Log.e("LoadImageTask", "Error decoding bitmap", e);
+                Log.e(TAG, "Error decoding bitmap", e);
                 return null;
             }
         }
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            // 检查Activity是否有效
-            if (isFinishing() || isDestroyed()) {
-                safeRecycleBitmap(bitmap); // 回收未使用的位图
+            if (bitmap == null) {
+                // 加载失败，继续下一张
+                loadNextImage();
                 return;
             }
 
-            // 更新UI
-            setNewBitmap(bitmap);
+            // 检查Activity是否有效
+            if (isFinishing() || isDestroyed()) {
+                // 🔴 泄漏点4：Activity 已销毁时，Bitmap 没有被回收
+                // 直接返回导致 Bitmap 泄漏
+                Log.w(TAG, "Activity 已销毁，Bitmap 未回收，造成泄漏");
+                return;
+            }
+
+            // 添加 Bitmap 到列表
+            addBitmap(bitmap);
         }
 
         @Override
         protected void onCancelled(Bitmap bitmap) {
-            // 任务取消时回收位图
-            safeRecycleBitmap(bitmap);
+            // 🔴 泄漏点5：任务取消时也不回收 Bitmap
+            Log.w(TAG, "任务取消，Bitmap 未回收");
+            loadNextImage();
         }
     }
 
-    // 采样解码方法保持不变
+    /**
+     * 解码图片 - 加载原图（不压缩）
+     */
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
-
-        // 第一次解析将inJustDecodeBounds设置为true，获取图片尺寸
         final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
 
-        // 计算inSampleSize值
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        // 加载原图，不压缩，最大化内存占用
+        boolean isOriginal = true;
 
-        // 使用获取到的inSampleSize值再次解析图片
-        options.inJustDecodeBounds = false;
+        if (isOriginal) {
+            Log.w(TAG, "isOriginal");
+            options.inSampleSize = 1;
+        } else {
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeResource(res, resId, options);
+            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+            options.inJustDecodeBounds = false;
+        }
+
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
+    /**
+     * 计算采样率
+     */
     public static int calculateInSampleSize(BitmapFactory.Options options,
                                             int reqWidth, int reqHeight) {
-        // 原始图片的宽高
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
@@ -171,14 +236,11 @@ public class OomDestoryImageActivity extends AppCompatActivity {
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
 
-            // 计算最大的inSampleSize值，该值是2的幂，
-            // 且保持高度和宽度大于所需的尺寸
             while ((halfHeight / inSampleSize) >= reqHeight
                     && (halfWidth / inSampleSize) >= reqWidth) {
                 inSampleSize *= 2;
             }
         }
-
         return inSampleSize;
     }
 }
