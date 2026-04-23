@@ -16,23 +16,16 @@
  * @author Rui Li <lirui05@kuaishou.com>
  */
 
-package com.kwai.koom.demo.javaleak.test;
+package com.kwai.koom.demo.javaleak.koom;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
-public class ByteArrayLeakMaker extends LeakMaker<ByteArrayLeakMaker.ByteArrayHolder> {
+public class BitmapLeakMaker extends LeakMaker<Bitmap> {
 
   @Override
   public void startLeak(Context context) {
-    uselessObjectList.add(new ByteArrayHolder());
+    Bitmap bitmap = Bitmap.createBitmap(1920, 1080, Bitmap.Config.ARGB_8888);
+    uselessObjectList.add(bitmap);
   }
-
-  public static class ByteArrayHolder {
-    private byte[] array;
-
-    public ByteArrayHolder() {
-      array = new byte[512 * 1024];
-    }
-  }
-
 }

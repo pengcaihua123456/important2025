@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Debug;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ public class OomOriginImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mat_photo);
 
+        Log.d("OomOriginImageActivity","onCreate");
+
         // 初始化视图
         mPhotoView = findViewById(R.id.photo_view);
         setupMemoryMonitor();  // 设置内存监控UI
@@ -46,7 +49,7 @@ public class OomOriginImageActivity extends AppCompatActivity {
                 public void run() {
                     super.run();
                     // 每次点击加载5张新图（可能触发OOM）
-                    for(int i=0;i<5;i++){
+                    for(int i=0;i<10;i++){
                         loadNewImage();
                     }
                 }
@@ -57,12 +60,33 @@ public class OomOriginImageActivity extends AppCompatActivity {
     /**
      * 加载新图片并消耗内存
      */
+    // 控制变量
+    private boolean useHalfSize = true;  // true:使用一半尺寸，false:使用原始尺寸
+
     private void loadNewImage() {
         try {
-            // 1. 创建超大Bitmap（8000x6000 ARGB_8888格式，约192MB）
-            Bitmap bitmap = Bitmap.createBitmap(8000, 6000, Bitmap.Config.ARGB_8888);
+            // 原始尺寸
+            int originalWidth = 8000;
+            int originalHeight = 6000;
 
-            // 2. 填充随机颜色（防止Bitmap复用优化）
+            int width, height;
+
+            // 一键切换
+            if (useHalfSize) {
+                // 使用一半尺寸
+                width = (int)(originalWidth / 1.5);   // 4000
+                height = (int) (originalHeight / 1.5); // 3000
+            } else {
+                // 使用原始尺寸
+                width = originalWidth;   // 8000
+                height = originalHeight; // 6000
+            }
+
+            // 计算内存大小
+            long memoryMB = (width * height * 4L) / (1024 * 1024);
+
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
             Canvas canvas = new Canvas(bitmap);
             int color = Color.rgb(
                     new Random().nextInt(256),
@@ -71,19 +95,24 @@ public class OomOriginImageActivity extends AppCompatActivity {
             );
             canvas.drawColor(color);
 
-            // 3. 保存强引用（故意不释放内存）
             bitmapHolder.add(bitmap);
-            // bitmapHolder.add(bitmap1); // 只是添加引用，不复制像素数据
-            // 更新UI显示最新图片
             runOnUiThread(() -> mPhotoView.setImageBitmap(bitmap));
 
-            // 4. 更新内存信息
-            updateMemoryInfo("已加载 " + bitmapHolder.size() + " 张图 (192MB/张)");
+            // 显示当前使用的尺寸
+            String sizeMode = useHalfSize ? "一半尺寸" : "原始尺寸";
+            updateMemoryInfo(sizeMode + ": " + width + "x" + height +
+                    " (" + memoryMB + "MB/张) 共" + bitmapHolder.size() + "张");
 
         } catch (OutOfMemoryError e) {
-            // 捕获内存溢出异常
-            updateMemoryInfo("OOM！最多加载: " + bitmapHolder.size() + " 张");
+            String sizeMode = useHalfSize ? "一半尺寸" : "原始尺寸";
+            updateMemoryInfo(sizeMode + " OOM！已加载: " + bitmapHolder.size() + " 张");
         }
+    }
+
+    // 一键切换方法（点击按钮时调用）
+    public void toggleImageSize() {
+        useHalfSize = !useHalfSize;  // 切换状态
+        loadNewImage();               // 重新加载
     }
 
     /**

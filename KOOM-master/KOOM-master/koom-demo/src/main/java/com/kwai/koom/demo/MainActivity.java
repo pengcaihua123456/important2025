@@ -19,16 +19,11 @@
 package com.kwai.koom.demo;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.kwai.koom.base.Monitor_SoKt;
 import com.kwai.koom.demo.javaleak.JavaLeakTestActivity;
-import com.kwai.koom.demo.javaleak.test.LeakMaker;
 import com.kwai.koom.demo.nativeleak.NativeLeakTestActivity;
-import com.kwai.koom.demo.threadleak.ThreadLeakTest;
 import com.kwai.koom.demo.threadleak.ThreadLeakTestActivity;
 
 public class MainActivity extends AppCompatActivity {

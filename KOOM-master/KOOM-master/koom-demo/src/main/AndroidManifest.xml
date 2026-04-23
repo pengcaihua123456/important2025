@@ -18,7 +18,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".javaleak.test.ActivityLeakMaker$LeakedActivity" />
+    <activity android:name=".javaleak.koom.ActivityLeakMaker$LeakedActivity" />
 
     <activity
       android:name=".nativeleak.NativeLeakTestActivity" />

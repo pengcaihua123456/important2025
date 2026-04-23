@@ -16,6 +16,17 @@ import java.io.File;
 
 import kotlin.jvm.functions.Function0;
 
+
+/***
+ * OOMMonitor 是tag
+ *
+ * oom meminfo.rate < 5.0%
+ *
+ * koom产生报告，也不一定代表有问题吧！如果你设置的阈值比较小的话！
+ * 如果设置比较大，就是有问题的
+ *
+ * OOMMonitorInitTask 中把监控阈值设置得很低（60% 就报警，正常是 80% 才报警
+ */
 public class OOMMonitorInitTask implements InitTask {
 
     private static final String TAG = "OOMMonitorInitTask";
@@ -84,7 +95,7 @@ public class OOMMonitorInitTask implements InitTask {
                     // ========== 测试配置（低阈值，容易触发）==========
                     .setThreadThreshold(50)                    // 线程阈值
                     .setFdThreshold(300)                       // 文件描述符阈值
-                    .setHeapThreshold(0.6f)                    // 【测试】堆内存阈值 30%，正常是 0.8
+                    .setHeapThreshold(30f)                    // 【测试】堆内存阈值 30%，正常是 0.8
                     .setVssSizeThreshold(1_000_000)            // VSS 阈值
                     .setMaxOverThresholdCount(1)               // 【测试】超过阈值 1 次就触发，正常是 3
                     .setLoopInterval(5000L)                    // 【测试】每 5 秒检测一次，正常是 30 秒
@@ -92,7 +103,6 @@ public class OOMMonitorInitTask implements InitTask {
                     .setAnalysisMaxTimesPerVersion(3)
                     .setAnalysisPeriodPerVersion((int) (15 * 24 * 60 * 60 * 1000L))
                     .setEnableHprofDumpAnalysis(true)
-                    // ========== 上传器 ==========
                     .setHprofUploader(new OOMHprofUploader() {
                         @Override
                         public void upload(File file, OOMHprofUploader.HprofType type) {

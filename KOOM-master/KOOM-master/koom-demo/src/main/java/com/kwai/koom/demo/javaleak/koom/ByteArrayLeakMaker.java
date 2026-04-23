@@ -1,10 +1,4 @@
-package com.kwai.koom.demo.javaleak.test;
-
-import android.content.Context;
-
-import com.kwai.koom.demo.javaleak.test.LeakMaker;
-
-/**
+/*
  * Copyright 2020 Kwai, Inc. All rights reserved.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +15,24 @@ import com.kwai.koom.demo.javaleak.test.LeakMaker;
  *
  * @author Rui Li <lirui05@kuaishou.com>
  */
-public class StringLeakMaker extends LeakMaker<String> {
+
+package com.kwai.koom.demo.javaleak.koom;
+
+import android.content.Context;
+
+public class ByteArrayLeakMaker extends LeakMaker<ByteArrayLeakMaker.ByteArrayHolder> {
 
   @Override
-  void startLeak(Context context) {
-    String largeStr = new String(new byte[512 * 1024]);
-    uselessObjectList.add(largeStr);
+  public void startLeak(Context context) {
+    uselessObjectList.add(new ByteArrayHolder());
   }
+
+  public static class ByteArrayHolder {
+    private byte[] array;
+
+    public ByteArrayHolder() {
+      array = new byte[512 * 1024];
+    }
+  }
+
 }

@@ -16,7 +16,7 @@
  * @author Rui Li <lirui05@kuaishou.com>
  */
 
-package com.kwai.koom.demo.javaleak.test;
+package com.kwai.koom.demo.javaleak.koom;
 
 import android.content.Context;
 import androidx.fragment.app.Fragment;

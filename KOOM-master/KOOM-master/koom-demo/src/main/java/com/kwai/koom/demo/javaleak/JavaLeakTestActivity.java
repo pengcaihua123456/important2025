@@ -10,9 +10,8 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.kwai.koom.demo.MainActivity;
 import com.kwai.koom.demo.R;
-import com.kwai.koom.demo.javaleak.test.LeakMaker;
+import com.kwai.koom.demo.javaleak.koom.LeakMaker;
 import com.kwai.koom.javaoom.hprof.ForkStripHeapDumper;
 import com.kwai.koom.javaoom.monitor.OOMMonitor;
 
