@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.evenbus.myapplication.leak.DefaultInitTask;
-import com.example.modulematrix.matrix.MatrixUtil;
+import com.evenbus.myapplication.leak.OOMMonitorInitTask;
 
 public class MatrixApplication extends Application {
 
@@ -17,10 +17,13 @@ public class MatrixApplication extends Application {
         ARouter.init(this);
 
 
+        // 1. 先初始化 DefaultInitTask
         DefaultInitTask.init(this);
+        // 2. 再初始化 OOMMonitorInitTask
+        OOMMonitorInitTask.getInstance().init(this);
 
 
-        new MatrixUtil().init(this);
+//        new MatrixUtil().init(this);
 
     }
 

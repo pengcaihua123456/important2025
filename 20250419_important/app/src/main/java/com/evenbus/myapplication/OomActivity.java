@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.evenbus.myapplication.leak.LeakThreadActivity;
-import com.evenbus.myapplication.leak.OOMMonitorInitTask;
 import com.evenbus.myapplication.leak.oom.OomBigDataActivity;
 import com.evenbus.myapplication.leak.oom.OomDestoryImageActivity;
 import com.evenbus.myapplication.leak.oom.OomOriginImageActivity;
@@ -38,7 +37,7 @@ public class OomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        OOMMonitorInitTask.getInstance().start();
+//        OOMMonitorInitTask.getInstance().start();
     }
 
     @OnClick(R.id.tv_compler)
