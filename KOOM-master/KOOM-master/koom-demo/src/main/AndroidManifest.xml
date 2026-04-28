@@ -27,6 +27,9 @@
       android:name=".threadleak.ThreadLeakTestActivity" />
 
     <activity android:name=".javaleak.JavaLeakTestActivity"/>
+
+    <activity
+      android:name=".javaleak.recycle.RecyclerViewLargeImageActivity" />
   </application>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
