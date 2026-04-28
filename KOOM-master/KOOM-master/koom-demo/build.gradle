@@ -47,6 +47,7 @@ android {
 dependencies {
     implementation deps.androidx.appcompat
     implementation deps.androidx.constraintlayout
+    implementation deps.androidx.recyclerview
     implementation deps.material
     implementation deps.kotlin.stdlib
 //    implementation "com.kuaishou.koom:koom-native-leak:${VERSION_NAME}"

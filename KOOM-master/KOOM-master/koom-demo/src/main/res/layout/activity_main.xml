@@ -28,6 +28,14 @@
       android:layout_centerInParent="true"
       android:text="Test Thread Leak" />
 
+  <Button
+      android:id="@+id/btn_test_recycler_large_image"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/btn_test_thread_leak"
+      android:layout_centerInParent="true"
+      android:text="Test RecyclerView Large Image" />
+
   <TextView
     android:id="@+id/tv_report_status"
     android:layout_width="wrap_content"

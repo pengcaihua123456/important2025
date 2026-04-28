@@ -23,8 +23,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kwai.koom.demo.javaleak.JavaLeakTestActivity;
+import com.kwai.koom.demo.javaleak.OOMMonitorInitTask;
+import com.kwai.koom.demo.javaleak.recycle.RecyclerViewLargeImageActivity;
 import com.kwai.koom.demo.nativeleak.NativeLeakTestActivity;
 import com.kwai.koom.demo.threadleak.ThreadLeakTestActivity;
+import com.kwai.koom.javaoom.monitor.OOMMonitor;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
     findViewById(R.id.btn_test_thread_leak).setOnClickListener(v -> {
       ThreadLeakTestActivity.Companion.start(MainActivity.this);
+    });
+
+    findViewById(R.id.btn_test_recycler_large_image).setOnClickListener(v -> {
+      RecyclerViewLargeImageActivity.start(MainActivity.this);
+      OOMMonitorInitTask.INSTANCE.init(MainActivity.this.getApplication());
+      OOMMonitor.INSTANCE.startLoop(true, false,30_000L);
     });
   }
 }
