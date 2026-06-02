@@ -15,6 +15,9 @@ import com.evenbus.view.light.BorderLightActivity;
 import com.evenbus.view.light.GradientBorderActivity;
 import com.evenbus.view.radio.RadioFrequencyUltraActivity;
 import com.evenbus.view.wheel.WheelActivity;
+import com.evenbus.view.doubao.ShimmerCardActivity;
+import com.evenbus.view.deepseek.AnimatedBorderCardActivity;
+import com.evenbus.view.qianwen.RoundBorderShimmerActivity;
 
 public class ViewActivity extends AppCompatActivity {
 
@@ -27,6 +30,9 @@ public class ViewActivity extends AppCompatActivity {
     public TextView tv_circle;
     public TextView tv_light;
     public TextView tv_gradient_border;
+    public TextView tv_shimmer_card;
+    public TextView tv_animated_border_card;
+    public TextView tv_round_border_shimmer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +100,30 @@ public class ViewActivity extends AppCompatActivity {
                 gradientBorderActivity();
             }
         });
+
+        tv_shimmer_card = findViewById(R.id.tv_shimmer_card);
+        tv_shimmer_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shimmerCardActivity();
+            }
+        });
+
+        tv_animated_border_card = findViewById(R.id.tv_animated_border_card);
+        tv_animated_border_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animatedBorderCardActivity();
+            }
+        });
+
+        tv_round_border_shimmer = findViewById(R.id.tv_round_border_shimmer);
+        tv_round_border_shimmer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                roundBorderShimmerActivity();
+            }
+        });
     }
 
     private void circleActivity(){
@@ -140,6 +170,24 @@ public class ViewActivity extends AppCompatActivity {
     private void gradientBorderActivity(){
         // 在按钮点击或其他事件中
         Intent intent = new Intent(ViewActivity.this, GradientBorderActivity.class);
+        startActivity(intent);
+    }
+
+    private void shimmerCardActivity(){
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(ViewActivity.this, ShimmerCardActivity.class);
+        startActivity(intent);
+    }
+
+    private void animatedBorderCardActivity(){
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(ViewActivity.this, AnimatedBorderCardActivity.class);
+        startActivity(intent);
+    }
+
+    private void roundBorderShimmerActivity(){
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(ViewActivity.this, RoundBorderShimmerActivity.class);
         startActivity(intent);
     }
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#111111">
+
+    <!-- 扫光卡片容器 -->
+    <com.evenbus.view.doubao.ShimmerCardView
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <!-- 卡片内容区域（透明背景+文本） -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电影推荐"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="《阿凡达：水之道》\n导演：詹姆斯·卡梅隆\n上映年份：2022\n推荐指数：★★★★★"
+                android:textColor="#EEEEEE"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+    </com.evenbus.view.doubao.ShimmerCardView>
+
+</LinearLayout>
