@@ -12,6 +12,7 @@ import com.evenbus.view.circle.CircleChargeActivity;
 import com.evenbus.view.extand.ExpandActivity;
 import com.evenbus.view.flow.FlowViewActivity;
 import com.evenbus.view.light.BorderLightActivity;
+import com.evenbus.view.light.GradientBorderActivity;
 import com.evenbus.view.radio.RadioFrequencyUltraActivity;
 import com.evenbus.view.wheel.WheelActivity;
 
@@ -25,6 +26,7 @@ public class ViewActivity extends AppCompatActivity {
 
     public TextView tv_circle;
     public TextView tv_light;
+    public TextView tv_gradient_border;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,14 @@ public class ViewActivity extends AppCompatActivity {
                 lightActivity();
             }
         });
+
+        tv_gradient_border = findViewById(R.id.tv_gradient_border);
+        tv_gradient_border.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gradientBorderActivity();
+            }
+        });
     }
 
     private void circleActivity(){
@@ -124,6 +134,12 @@ public class ViewActivity extends AppCompatActivity {
     private void lightActivity(){
         // 在按钮点击或其他事件中
         Intent intent = new Intent(ViewActivity.this, BorderLightActivity.class);
+        startActivity(intent);
+    }
+
+    private void gradientBorderActivity(){
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(ViewActivity.this, GradientBorderActivity.class);
         startActivity(intent);
     }
 

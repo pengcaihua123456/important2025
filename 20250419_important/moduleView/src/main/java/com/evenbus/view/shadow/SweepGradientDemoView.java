@@ -67,9 +67,9 @@ public class SweepGradientDemoView extends View {
         }
         
         // 应用旋转矩阵
-//        matrix.reset();
-//        matrix.postRotate(rotationAngle, width / 2f, height / 2f);
-//        sweepGradient.setLocalMatrix(matrix);
+        matrix.reset();
+        matrix.postRotate(rotationAngle, width / 2f, height / 2f);
+        sweepGradient.setLocalMatrix(matrix);
         
         // 绘制 SweepGradient 长方形
         if (sweepGradient != null) {
