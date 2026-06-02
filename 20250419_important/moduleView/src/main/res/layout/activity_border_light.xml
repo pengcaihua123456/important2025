@@ -60,6 +60,22 @@
             android:max="100"
             android:progress="30"/>
 
+        <TextView
+            android:id="@+id/text_blur_width"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="模糊宽度: 12"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
+
+        <SeekBar
+            android:id="@+id/seekbar_blur_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="50"
+            android:progress="12"/>
+
         <Button
             android:id="@+id/btn_toggle"
             android:layout_width="wrap_content"

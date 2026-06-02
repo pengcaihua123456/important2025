@@ -16,9 +16,9 @@ import android.view.animation.LinearInterpolator;
 
 
 /***
- * 重要的效果, 紫色最接近的效果了
+ * 重要的效果, 紫色最接近的效果了(带模糊效果的)
  */
-public class BorderLightView_1 extends View {
+public class BorderLightView_1_3 extends View {
 
     private Paint borderPaint;
     private Paint lightPaint;
@@ -42,15 +42,15 @@ public class BorderLightView_1 extends View {
     private long animationDuration = 3000L; // 动画持续时间（毫秒）
     private float blurRadius = 12f; // 模糊效果半径，可调节
 
-    public BorderLightView_1(Context context) {
+    public BorderLightView_1_3(Context context) {
         this(context, null);
     }
 
-    public BorderLightView_1(Context context, AttributeSet attrs) {
+    public BorderLightView_1_3(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BorderLightView_1(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BorderLightView_1_3(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
