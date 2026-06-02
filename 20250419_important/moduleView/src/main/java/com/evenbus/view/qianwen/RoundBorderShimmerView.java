@@ -22,8 +22,9 @@ public class RoundBorderShimmerView extends View {
     private Paint mShimmerPaint;
     private Paint mGlowPaint;
 
-    private SweepGradient mSweepGradient;  // 扫描渐变
-    private Matrix mGradientMatrix;        // 用于旋转渐变
+    private SweepGradient mSweepGradient;
+    private Matrix mGradientMatrix;
+    private float centerX, centerY;
 
     public RoundBorderShimmerView(Context context) {
         super(context);
@@ -43,11 +44,13 @@ public class RoundBorderShimmerView extends View {
         mShimmerPaint.setStyle(Paint.Style.STROKE);
         mShimmerPaint.setStrokeWidth(mStrokeWidth);
         mShimmerPaint.setStrokeCap(Paint.Cap.ROUND);
+        mShimmerPaint.setStrokeJoin(Paint.Join.ROUND);
 
         mGlowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mGlowPaint.setStyle(Paint.Style.STROKE);
-        mGlowPaint.setStrokeWidth(mStrokeWidth + 10f);
+        mGlowPaint.setStrokeWidth(mStrokeWidth + 8f);
         mGlowPaint.setStrokeCap(Paint.Cap.ROUND);
+        mGlowPaint.setStrokeJoin(Paint.Join.ROUND);
 
         mGradientMatrix = new Matrix();
     }
@@ -55,6 +58,9 @@ public class RoundBorderShimmerView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+
+        centerX = w / 2f;
+        centerY = h / 2f;
 
         RectF rectF = new RectF(
                 mStrokeWidth / 2,
@@ -69,52 +75,30 @@ public class RoundBorderShimmerView extends View {
         mTotalLength = mPathMeasure.getLength();
         mShimmerLength = mTotalLength / 4f;
 
-        // 创建扫描渐变（基于卡片中心）
-        createSweepGradient(w, h);
+        createSweepGradient();
 
         startAnimation();
     }
 
-    /**
-     * 创建扫描渐变
-     * 渐变围绕中心旋转一周，完美贴合圆角边框
-     */
-    private void createSweepGradient(int width, int height) {
-        float centerX = width / 2f;
-        float centerY = height / 2f;
-
-        // 扫描渐变的颜色数组（0度对应右边，顺时针旋转）
-        // 为了让光晕效果更好，设置多段渐变
+    private void createSweepGradient() {
+        // 注意：这里先不旋转，让渐变从0°开始（右边）
         int[] colors = {
-                Color.TRANSPARENT,   // 0°
-                0xFFA855F7,          // 45° 紫色
-                0xFFC084FC,          // 90° 浅紫
-                0xFFE9D5FF,          // 135° 更浅紫
-                0xFFFFFFFF,          // 180° 亮白（正下方）
-                0xFFE9D5FF,          // 225°
-                0xFFC084FC,          // 270°
-                0xFFA855F7,          // 315°
-                Color.TRANSPARENT    // 360°
+                Color.TRANSPARENT,
+                0x40A855F7,  // 半透明紫色，让过渡更自然
+                0x80C084FC,
+                0xCCE9D5FF,
+                0xFFFFFFFF,  // 亮白
+                0xCCE9D5FF,
+                0x80C084FC,
+                0x40A855F7,
+                Color.TRANSPARENT
         };
 
-        // 位置数组（0-1之间）
         float[] positions = {
-                0f,     // 透明
-                0.125f, // 45° 紫色
-                0.25f,  // 90° 浅紫
-                0.375f, // 135° 更浅紫
-                0.5f,   // 180° 亮白中心
-                0.625f, // 225°
-                0.75f,  // 270°
-                0.875f, // 315°
-                1f      // 360° 透明
+                0f, 0.125f, 0.25f, 0.375f, 0.5f, 0.625f, 0.75f, 0.875f, 1f
         };
 
         mSweepGradient = new SweepGradient(centerX, centerY, colors, positions);
-
-        // 可选：旋转渐变，让亮白区域从底部开始
-        // mGradientMatrix.setRotate(180, centerX, centerY);
-        // mSweepGradient.setLocalMatrix(mGradientMatrix);
     }
 
     private void startAnimation() {
@@ -133,11 +117,11 @@ public class RoundBorderShimmerView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // 1. 画黑色卡片背景
+        // 画背景
         RectF cardRect = new RectF(0, 0, getWidth(), getHeight());
         canvas.drawRoundRect(cardRect, mCardRadius, mCardRadius, mBgPaint);
 
-        // 2. 获取当前要显示的流光路径段（顺时针从底部开始）
+        // 获取流光路径段
         float start = mAnimOffset;
         float end = start + mShimmerLength;
         Path segment = new Path();
@@ -152,15 +136,33 @@ public class RoundBorderShimmerView extends View {
         }
         segment.rLineTo(0, 0);
 
-        // 3. 绘制光晕层（模糊 + 扫描渐变）
+        // ========== 关键修复：让渐变跟随流光旋转 ==========
+        // 计算流光中心点在整个路径上的进度
+        float progress = (mAnimOffset + mShimmerLength / 2) / mTotalLength;
+        // 转换为角度（顺时针，0°在右边）
+        float angle = progress * 360f;
+        // 旋转渐变，让亮白区域始终在流光中心
+        mGradientMatrix.reset();
+        mGradientMatrix.setRotate(angle, centerX, centerY);
+        mSweepGradient.setLocalMatrix(mGradientMatrix);
+
+        // 绘制多层光晕
         canvas.saveLayer(0, 0, getWidth(), getHeight(), null);
 
+        // 外层光晕（宽+模糊）
         mGlowPaint.setShader(mSweepGradient);
-        mGlowPaint.setMaskFilter(new BlurMaskFilter(12f, BlurMaskFilter.Blur.NORMAL));
-        mGlowPaint.setAlpha(80);  // 半透明光晕
+        mGlowPaint.setMaskFilter(new BlurMaskFilter(15f, BlurMaskFilter.Blur.NORMAL));
+        mGlowPaint.setAlpha(60);
+        mGlowPaint.setStrokeWidth(mStrokeWidth + 12f);
         canvas.drawPath(segment, mGlowPaint);
 
-        // 4. 绘制主流光层（清晰 + 扫描渐变）
+        // 中层光晕
+        mGlowPaint.setMaskFilter(new BlurMaskFilter(8f, BlurMaskFilter.Blur.NORMAL));
+        mGlowPaint.setAlpha(100);
+        mGlowPaint.setStrokeWidth(mStrokeWidth + 6f);
+        canvas.drawPath(segment, mGlowPaint);
+
+        // 主流光
         mShimmerPaint.setShader(mSweepGradient);
         mShimmerPaint.setMaskFilter(null);
         mShimmerPaint.setAlpha(255);
@@ -168,7 +170,6 @@ public class RoundBorderShimmerView extends View {
 
         canvas.restore();
 
-        // 清理引用
         mShimmerPaint.setShader(null);
         mGlowPaint.setShader(null);
         mGlowPaint.setMaskFilter(null);

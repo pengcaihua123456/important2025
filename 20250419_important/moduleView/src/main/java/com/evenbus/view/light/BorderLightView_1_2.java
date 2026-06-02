@@ -15,13 +15,12 @@ import android.view.animation.LinearInterpolator;
 
 
 /***
- * 重要的效果, 紫色最接近的效果了
+ * 重要的效果(紫色最接近的效果了)
  */
-public class BorderLightView_1 extends View {
+public class BorderLightView_1_2 extends View {
 
     private Paint borderPaint;
     private Paint lightPaint;
-    private Paint shadowPaint; // 发光效果画笔
     private RectF borderRect;
     private Path borderPath;
     private Path lightSegmentPath; // 新增：用于存储光段路径
@@ -39,15 +38,15 @@ public class BorderLightView_1 extends View {
     private float startX, startY, endX, endY;
     private long animationDuration = 3000L; // 动画持续时间（毫秒）
 
-    public BorderLightView_1(Context context) {
+    public BorderLightView_1_2(Context context) {
         this(context, null);
     }
 
-    public BorderLightView_1(Context context, AttributeSet attrs) {
+    public BorderLightView_1_2(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BorderLightView_1(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BorderLightView_1_2(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -62,14 +61,6 @@ public class BorderLightView_1 extends View {
         lightPaint.setStyle(Paint.Style.STROKE);
         lightPaint.setStrokeWidth(borderWidth);
         lightPaint.setStrokeCap(Paint.Cap.ROUND);
-
-        // 发光效果画笔
-        shadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        shadowPaint.setStyle(Paint.Style.STROKE);
-        shadowPaint.setStrokeWidth(borderWidth * 1.5f); // 稍宽一些
-        shadowPaint.setStrokeCap(Paint.Cap.ROUND);
-        // 设置发光效果：颜色使用淡紫色，模糊半径8px，无偏移（向内发光通过路径偏移实现）
-        shadowPaint.setShadowLayer(8f, 0f, 0f, 0xFFE0B0FF);
 
         borderRect = new RectF();
         borderPath = new Path();

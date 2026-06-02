@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 /**
- * 原版本
+ * 原版本(非常好的2边细，中间粗的效果)
  * 圆角矩形边框流光动画
  * 效果：光带长度 = 周长 1/4，顺时针沿边框移动，两端淡中间亮，移动变色
  */

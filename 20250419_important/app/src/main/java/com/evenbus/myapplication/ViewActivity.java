@@ -18,6 +18,7 @@ import com.evenbus.view.wheel.WheelActivity;
 import com.evenbus.view.doubao.ShimmerCardActivity;
 import com.evenbus.view.deepseek.AnimatedBorderCardActivity;
 import com.evenbus.view.qianwen.RoundBorderShimmerActivity;
+import com.evenbus.view.texture.RoundBorderShimmerShaderActivity;
 
 public class ViewActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class ViewActivity extends AppCompatActivity {
     public TextView tv_shimmer_card;
     public TextView tv_animated_border_card;
     public TextView tv_round_border_shimmer;
+    public TextView tv_round_border_shimmer_shader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,14 @@ public class ViewActivity extends AppCompatActivity {
                 roundBorderShimmerActivity();
             }
         });
+
+        tv_round_border_shimmer_shader = findViewById(R.id.tv_round_border_shimmer_shader);
+        tv_round_border_shimmer_shader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                roundBorderShimmerShaderActivity();
+            }
+        });
     }
 
     private void circleActivity(){
@@ -188,6 +198,12 @@ public class ViewActivity extends AppCompatActivity {
     private void roundBorderShimmerActivity(){
         // 在按钮点击或其他事件中
         Intent intent = new Intent(ViewActivity.this, RoundBorderShimmerActivity.class);
+        startActivity(intent);
+    }
+
+    private void roundBorderShimmerShaderActivity(){
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(ViewActivity.this, RoundBorderShimmerShaderActivity.class);
         startActivity(intent);
     }
 

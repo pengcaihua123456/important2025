@@ -5,8 +5,8 @@
     android:gravity="center"
     android:background="#000000">
 
-    <!-- 圆角边框流光卡片 -->
-    <com.evenbus.view.qianwen.RoundBorderShimmerView_3
+    <!-- 圆角边框流光卡片（Shader版本） -->
+    <com.evenbus.view.texture.RoundBorderShimmerView_Shader
         android:layout_width="320dp"
         android:layout_height="200dp"
         android:layout_margin="16dp" />

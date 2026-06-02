@@ -12,6 +12,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+
+/***
+ * (非常好的2边细，中间粗的效果)
+ */
 public class RoundBorderShimmerView_3 extends View {
     private final float mCardRadius = 28f;
     private final float mStrokeWidth = 6f;
