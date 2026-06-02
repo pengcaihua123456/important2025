@@ -11,6 +11,7 @@ import com.evenbus.view.charge.AnimVivoActivity;
 import com.evenbus.view.circle.CircleChargeActivity;
 import com.evenbus.view.extand.ExpandActivity;
 import com.evenbus.view.flow.FlowViewActivity;
+import com.evenbus.view.light.BorderLightActivity;
 import com.evenbus.view.radio.RadioFrequencyUltraActivity;
 import com.evenbus.view.wheel.WheelActivity;
 
@@ -23,6 +24,7 @@ public class ViewActivity extends AppCompatActivity {
     public TextView tv_expand;
 
     public TextView tv_circle;
+    public TextView tv_light;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class ViewActivity extends AppCompatActivity {
         tv_view = findViewById(R.id.tv_view);
         tv_expand = findViewById(R.id.tv_expand);
         tv_circle = findViewById(R.id.tv_circle);
+        tv_light = findViewById(R.id.tv_light);
         tv_trace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +77,13 @@ public class ViewActivity extends AppCompatActivity {
                 circleActivity();
             }
         });
+
+        tv_light.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lightActivity();
+            }
+        });
     }
 
     private void circleActivity(){
@@ -111,5 +121,10 @@ public class ViewActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void lightActivity(){
+        // 在按钮点击或其他事件中
+        Intent intent = new Intent(ViewActivity.this, BorderLightActivity.class);
+        startActivity(intent);
+    }
 
 }
